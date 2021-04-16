@@ -14,6 +14,7 @@ import com.example.pocket_library_list.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.squareup.picasso.Picasso
 import interfaces.Interface
+import models.BookshelveVolumeModels
 import models.SearchedBooksModel
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -44,15 +45,24 @@ class Manual: AppCompatActivity() {
 
     }
 
-    private fun getSpinnerValue():String{
+    private fun getSpinnerValue(): String {
         val spinner = findViewById<View>(R.id.spinner) as Spinner
-        return spinner.selectedItem.toString();
+
+        return when (spinner.selectedItem.toString()) {
+            "Read" -> "4"
+            "Currently Reading" -> "3"
+            "Reading" -> "3"
+            else -> "bruh" // Edit this with toast
+        }
     }
+
+
 
     private fun getISBNTextValue():String{
         val isbn = findViewById<EditText>(R.id.isbnInputField)
         return isbn.text.toString()
     }
+
 
     @SuppressLint("SetTextI18n")
     private fun retrieveBasicInfo() {
@@ -154,7 +164,7 @@ class Manual: AppCompatActivity() {
                 if (response.code() == 200) {
                     println("bebeebebbe")
                     val volumes: SearchedBooksModel = response.body()
-                    println(volumes.items!!.get(0).id)
+                    postData(baseUrl,token, volumes.items!![0].id)
 
                 }
             }
@@ -167,9 +177,7 @@ class Manual: AppCompatActivity() {
     }
 
 
-
-
-   private fun postData(baseUrl: String, token: String, id:String ){
+   private fun postData(baseUrl: String, token: String, bookID: String ){
         val logging = HttpLoggingInterceptor()
         logging.apply { logging.level = HttpLoggingInterceptor.Level.BODY }
         val httpClient = OkHttpClient.Builder().addInterceptor(logging)
@@ -190,28 +198,24 @@ class Manual: AppCompatActivity() {
 
         val service = retrofit.create(Interface::class.java)
 
-        val call = service.getBooksInfo(getISBNTextValue())
+        val call = service.postNewBook(getSpinnerValue(),bookID)
+       call.enqueue(object : retrofit2.Callback<BookshelveVolumeModels> {
+           override fun onResponse(
+                   call: Call<BookshelveVolumeModels>,
+                   response: Response<BookshelveVolumeModels>
+           ) {
+               if (response.code() == 200) {
+                   println("Laikam ir, idk" +
+                           "")
+               }
+           }
 
+           override fun onFailure(call: Call<BookshelveVolumeModels>?, t: Throwable?) {
+               TODO("Not yet implemented")
+           }
 
-        call.enqueue(object : retrofit2.Callback<SearchedBooksModel> {
-            override fun onResponse(
-                    call: Call<SearchedBooksModel>,
-                    response: Response<SearchedBooksModel>
-            ) {
-                if (response.code() == 200) {
-                    println("bebeebebbe")
-                    val volumes: SearchedBooksModel = response.body()
-                   volumes.items!!.get(0).id
-
-                }
-            }
-
-            override fun onFailure(call: Call<SearchedBooksModel>?, t: Throwable?) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }
+       })
+   }
 }
 
 
