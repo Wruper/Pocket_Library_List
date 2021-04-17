@@ -8,7 +8,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@drawable/background">
+        android:background="@drawable/background"
+        android:id="@+id/background_image">
 
 
         <TextView
@@ -48,22 +49,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/isbnText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
-        android:textSize="20sp"
-        android:text="Insert the ISBN number"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtValue"
-        android:layout_below="@+id/isbnText"
+        android:id="@+id/isbnValue"
+        android:layout_below="@id/background_image"
         android:layout_marginTop="80dp"
         android:text="Scan your ISBN number:"
         android:layout_centerInParent="true"
         android:textSize="30dp"
 
+        />
+    <Spinner
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/isbnValue"
+        android:layout_marginTop="30dp"
+        android:id="@+id/spinner"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
         />
 
     <Button
@@ -72,16 +73,27 @@
         android:id="@+id/btnScan"
         android:text="Scan"
         android:layout_centerInParent="true"
-        android:layout_below="@+id/txtValue"
         android:layout_marginTop="40dp"
-        />
+        android:layout_above="@+id/buttomImage"
+        android:layout_marginBottom="30dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/background_180"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/buttomImage">
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnScan"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:text="Submit" />
-
+        android:layout_marginBottom="20dp"
+        android:text="Submit"
+        android:id="@+id/sumbitButton"/>
+    </RelativeLayout>
 
 </RelativeLayout>
+
+

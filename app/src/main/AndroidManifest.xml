@@ -22,7 +22,7 @@
         <activity android:name=".Read"/>
         <activity android:name=".CurrentlyReading"/>
         <activity android:name=".ToRead"/>
-        <activity android:name="adding_books.AddBook"/>
+        <activity android:name="adding_books.AddBookMenu"/>
         <activity android:name="adding_books.Manual"/>
         <activity android:name="adding_books.Camera"
             android:screenOrientation="portrait" />

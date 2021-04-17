@@ -11,7 +11,7 @@ import com.example.pocket_library_list.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.squareup.picasso.Picasso
 
-class AddBook: AppCompatActivity() {
+class AddBookMenu: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

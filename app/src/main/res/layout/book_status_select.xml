@@ -34,6 +34,7 @@
 
                 />
 
+
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -190,10 +191,15 @@
                         android:text="To Read"
                         android:textColor="@color/purple_200"
                         android:textSize="18sp" />
+
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
+
         </GridLayout>
 
 
     </LinearLayout>
+
+
 </LinearLayout>

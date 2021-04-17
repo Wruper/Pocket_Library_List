@@ -1,6 +1,6 @@
 package com.example.pocket_library_list
 
-import adding_books.AddBook
+import adding_books.AddBookMenu
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -54,7 +54,7 @@ class MainMenu : AppCompatActivity() {
         }
 
         addBook.setOnClickListener{
-            val intent = Intent(this, AddBook::class.java)
+            val intent = Intent(this, AddBookMenu::class.java)
             startActivity(intent)
         }
     }

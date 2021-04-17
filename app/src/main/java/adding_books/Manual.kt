@@ -50,12 +50,11 @@ class Manual: AppCompatActivity() {
 
         return when (spinner.selectedItem.toString()) {
             "Read" -> "4"
-            "Currently Reading" -> "3"
+            "Currently reading" -> "3"
             "Reading" -> "3"
-            else -> "bruh" // Edit this with toast
+            else -> "Error" // Edit this with toast
         }
     }
-
 
 
     private fun getISBNTextValue():String{
@@ -78,17 +77,16 @@ class Manual: AppCompatActivity() {
         }
     }
 
-
     private fun addValueToSpinner() {
             val spinner = findViewById<Spinner>(R.id.spinner)
-            val arrayList = arrayListOf<String>("Read", "Currently reading", "Reading")
-            val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList)
+            val arrayList = arrayListOf("Read", "Currently reading", "Reading")
+            val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayList)
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = arrayAdapter
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                    val tutorialsName = parent.getItemAtPosition(position).toString()
-                    Toast.makeText(parent.context, "Selected: $tutorialsName", Toast.LENGTH_LONG).show()
+                    val spinnerValue = parent.getItemAtPosition(position).toString()
+                    Toast.makeText(parent.context, "Selected: $spinnerValue", Toast.LENGTH_SHORT).show()
                 }
 
                 override  fun onNothingSelected(parent: AdapterView<*>) {}
@@ -170,7 +168,8 @@ class Manual: AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<SearchedBooksModel>?, t: Throwable?) {
-                TODO("Not yet implemented")
+                Toast.makeText(applicationContext,"The ISBN numbers is either invalid" +
+                        "or cannot be found on the database.",Toast.LENGTH_LONG).show()
             }
 
         })
@@ -204,14 +203,12 @@ class Manual: AppCompatActivity() {
                    call: Call<BookshelveVolumeModels>,
                    response: Response<BookshelveVolumeModels>
            ) {
-               if (response.code() == 200) {
-                   println("Laikam ir, idk" +
-                           "")
-               }
+               Toast.makeText(applicationContext,"Success",Toast.LENGTH_LONG).show()
            }
 
            override fun onFailure(call: Call<BookshelveVolumeModels>?, t: Throwable?) {
-               TODO("Not yet implemented")
+               Toast.makeText(applicationContext,"Something went wrong," +
+                       "please check your internet connection",Toast.LENGTH_LONG).show()
            }
 
        })
