@@ -4,20 +4,26 @@ package adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import models.BookshelveVolumeModels
 import com.example.pocket_library_list.R
 import com.squareup.picasso.Picasso
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class ReadListView(val volumes: BookshelveVolumeModels) : RecyclerView.Adapter<CustomViewHolder>() {
+class ReadListView(private val volumes: BookshelveVolumeModels) :
+        RecyclerView.Adapter<CustomViewHolder>(){
+
+
+     var bookList = ArrayList<String>()
+     var filteredBookList: ArrayList<String> = bookList
 
 
 
 
-    // Changing the URL from api from HTTP to HTTPS, so that Picaso can use it
+    // Changing the URL from api from HTTP to HTTPS, so that Picasso can use it
     private fun editImageLink(image: String): String {
         var newImageLink = image
         newImageLink.removeRange(0, 3)
@@ -25,15 +31,7 @@ class ReadListView(val volumes: BookshelveVolumeModels) : RecyclerView.Adapter<C
         return newImageLink
     }
 
-    //Checks if the retrieved ISBN is ISBN_10 or ISBN_13
-    private fun checkISBN(isbn: String): String {
-        var newISBN: String = isbn
-        if (isbn.length != 13) {
-            return "97986$newISBN"
-        } else {
-            return newISBN
-        }
-    }
+
 
 
     override fun getItemCount(): Int {
@@ -44,11 +42,14 @@ class ReadListView(val volumes: BookshelveVolumeModels) : RecyclerView.Adapter<C
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.custom_list_view_row, parent, false)
+
+
         return CustomViewHolder(cellForRow)
 
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+
         val title = volumes.items!!.get(position)!!.volumeInfo!!.title
         val author = volumes.items!!.get(position)!!.volumeInfo!!.authors!!.get(0)
         val releaseYear = volumes.items!!.get(position)!!.volumeInfo!!.publishedDate
@@ -56,11 +57,12 @@ class ReadListView(val volumes: BookshelveVolumeModels) : RecyclerView.Adapter<C
         var publisher = volumes.items!!.get(position)!!.volumeInfo!!.publisher
         val bookCover = volumes.items!!.get(position)!!.volumeInfo!!.imageLinks!!.thumbnail!!.toString()
         val newBookCover = editImageLink(bookCover)
-        println(isbn + "aa")
 
         if (publisher == "") {
             publisher = "NO DATA AVALIABLE"
         }
+
+
 
 
 
@@ -73,7 +75,11 @@ class ReadListView(val volumes: BookshelveVolumeModels) : RecyclerView.Adapter<C
         Picasso.get().load(newBookCover).into(cover);
 
 
+
     }
+
+
+
 }
 
 

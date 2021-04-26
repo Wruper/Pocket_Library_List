@@ -70,7 +70,6 @@ dependencies {
 
     implementation "androidx.recyclerview:recyclerview:1.2.0"
 
-    implementation 'com.beust:klaxon:5.5'
 
 
 

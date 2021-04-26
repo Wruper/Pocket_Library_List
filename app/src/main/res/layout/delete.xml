@@ -5,10 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background=	"@color/menu_background">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@drawable/background">
+        android:background="@drawable/background"
+        android:id="@+id/background">
 
 
         <TextView
@@ -44,7 +46,6 @@
 
     </RelativeLayout>
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,8 +55,31 @@
         android:textSize="20sp"
         android:text="Insert the ISBN number"/>
 
+    <Spinner
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/isbnText"
+        android:layout_marginTop="70dp"
+        android:id="@+id/spinnerCategory"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        />
+
+    <Spinner
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/isbnText"
+        android:layout_marginTop="70dp"
+        android:id="@+id/spinnerBook"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+
+        android:layout_alignParentRight="true"
+        />
+
     <EditText
-        android:id="@+id/isbn"
+        android:id="@+id/isbnInputField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/isbnText"
@@ -68,9 +92,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/isbn"
+        android:layout_below="@id/isbnInputField"
         android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
-        android:text="Submit"/>
+        android:id="@+id/deleteButton"
+        android:text="Delete"/>
 
 </RelativeLayout>

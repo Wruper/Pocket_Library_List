@@ -57,6 +57,11 @@ class MainMenu : AppCompatActivity() {
             val intent = Intent(this, AddBookMenu::class.java)
             startActivity(intent)
         }
+
+        delete.setOnClickListener{
+            val intent = Intent(this, Delete::class.java)
+            startActivity(intent)
+        }
     }
 
 

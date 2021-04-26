@@ -51,7 +51,7 @@ class Manual: AppCompatActivity() {
         return when (spinner.selectedItem.toString()) {
             "Read" -> "4"
             "Currently reading" -> "3"
-            "Reading" -> "3"
+            "To Read" -> "3"
             else -> "Error" // Edit this with toast
         }
     }
@@ -79,7 +79,7 @@ class Manual: AppCompatActivity() {
 
     private fun addValueToSpinner() {
             val spinner = findViewById<Spinner>(R.id.spinner)
-            val arrayList = arrayListOf("Read", "Currently reading", "Reading")
+            val arrayList = arrayListOf("Read", "Currently reading", "To Read")
             val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayList)
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = arrayAdapter

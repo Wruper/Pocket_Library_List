@@ -7,12 +7,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
+import android.widget.Button
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import models.BookshelveVolumeModels
 import interfaces.Interface
+import models.SearchedBooksModel
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,6 +36,8 @@ class Read: AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         retrieveAuthToken(recyclerView)
 
+
+
     }
 
 
@@ -43,6 +47,8 @@ class Read: AppCompatActivity() {
             return false
         }
     }
+
+
 
     private fun retrieveAuthToken(layout:RecyclerView) {
         val am = AccountManager.get(this)
@@ -108,21 +114,28 @@ class Read: AppCompatActivity() {
                    println("bebeebebbe")
                    val volumes: BookshelveVolumeModels = response.body()
 
-
                    runOnUiThread {
+
                        layout.adapter = ReadListView(volumes)
-                       val search = findViewById<SearchView>(R.id.searchView)
+
+                           }
+
+
+
+
+
 
 
                    }
                }
-           }
+
 
            override fun onFailure(call: Call<BookshelveVolumeModels>?, t: Throwable?) {
                println("blaaa")
            }
        })
     }
+
 }
 
 

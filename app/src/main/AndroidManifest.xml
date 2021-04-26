@@ -26,6 +26,7 @@
         <activity android:name="adding_books.Manual"/>
         <activity android:name="adding_books.Camera"
             android:screenOrientation="portrait" />
+        <activity android:name=".Delete"/>
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
