@@ -20,6 +20,8 @@ interface Interface {
   @GET("volumes?")
   fun getBooksInfo(@Query("q") q: String):Call<SearchedBooksModel>
 
+
+
   @POST("mylibrary/bookshelves/{shelf}/addVolume?")
   fun postNewBook(@Path("shelf") shelfType: String, @Query ("volumeId") volumeId: String)
   : Call<BookshelveVolumeModels> // uztaisit modeli
@@ -27,6 +29,5 @@ interface Interface {
   @POST("mylibrary/bookshelves/{shelf}/removeVolume?")
   fun removeNewBook(@Path("shelf") shelfType: String, @Query ("volumeId") volumeId: String)
             : Call<BookshelveVolumeModels>
-
 
 }
