@@ -1,6 +1,5 @@
-package com.example.pocket_library_list
+package book_categories
 
-import adding_books.AddBookMenu
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -8,25 +7,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import book_categories.CategoriesMenu
-
-
+import com.example.pocket_library_list.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.squareup.picasso.Picasso
-import shelf.BookStatusSelect
 
-
-class MainMenu : AppCompatActivity() {
-
+class CategoriesMenu: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_menu)
-
+        setContentView(R.layout.book_status_select)
+        onClickListener()
         retrieveBasicInfo()
-        onClickListeners()
 
-        }
+    }
 
     @SuppressLint("SetTextI18n")
     private fun retrieveBasicInfo() {
@@ -42,43 +35,25 @@ class MainMenu : AppCompatActivity() {
         }
     }
 
-    private fun onClickListeners(){
-        val categories: CardView = findViewById(R.id.categories)
-        val addBook:CardView = findViewById(R.id.add)
-        val delete: CardView = findViewById(R.id.delete)
-        val shelf: CardView = findViewById(R.id.shelf)
-        val stats: CardView = findViewById(R.id.stats)
 
+    private fun onClickListener(){
+        val toRead: CardView = findViewById(R.id.toRead)
+        val read: CardView = findViewById(R.id.read)
+        val currentlyReading: CardView = findViewById(R.id.currentlyReading)
 
-        shelf.setOnClickListener{
-            val intent = Intent(this, BookStatusSelect::class.java)
+        read.setOnClickListener{
+            val intent = Intent(this, ReadCategory::class.java)
             startActivity(intent)
         }
 
-        addBook.setOnClickListener{
-            val intent = Intent(this, AddBookMenu::class.java)
+        toRead.setOnClickListener{
+            val intent = Intent(this, ToReadCategory::class.java)
             startActivity(intent)
         }
 
-        delete.setOnClickListener{
-            val intent = Intent(this, Delete::class.java)
+        currentlyReading.setOnClickListener{
+            val intent = Intent(this, CurrentlyReadingCategory::class.java)
             startActivity(intent)
         }
-
-        categories.setOnClickListener{
-            val intent = Intent(this, CategoriesMenu::class.java)
-            startActivity(intent)
-        }
-
     }
-
-
-
-
-
-
 }
-
-
-
-

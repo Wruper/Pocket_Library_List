@@ -17,11 +17,6 @@ class ReadListView(private val volumes: BookshelveVolumeModels) :
         RecyclerView.Adapter<CustomViewHolder>(){
 
 
-     var bookList = ArrayList<String>()
-     var filteredBookList: ArrayList<String> = bookList
-
-
-
 
     // Changing the URL from api from HTTP to HTTPS, so that Picasso can use it
     private fun editImageLink(image: String): String {
@@ -41,9 +36,7 @@ class ReadListView(private val volumes: BookshelveVolumeModels) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val cellForRow = layoutInflater.inflate(R.layout.custom_list_view_row, parent, false)
-
-
+        val cellForRow = layoutInflater.inflate(R.layout.custom_book_view_row, parent, false)
         return CustomViewHolder(cellForRow)
 
     }

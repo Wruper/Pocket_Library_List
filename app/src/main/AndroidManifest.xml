@@ -18,15 +18,25 @@
         android:theme="@style/Theme.Pocket_Library_List.NoActionBar">
         <activity android:name=".LogInScreen"/>
         <activity android:name=".MainMenu"/>
-        <activity android:name=".BookStatusSelect"/>
-        <activity android:name=".Read"/>
-        <activity android:name=".CurrentlyReading"/>
-        <activity android:name=".ToRead"/>
+
+        <activity android:name="shelf.BookStatusSelect"/>
+        <activity android:name="shelf.Read"/>
+        <activity android:name="shelf.CurrentlyReading"/>
+        <activity android:name="shelf.ToRead"/>
+
         <activity android:name="adding_books.AddBookMenu"/>
         <activity android:name="adding_books.Manual"/>
         <activity android:name="adding_books.Camera"
             android:screenOrientation="portrait" />
+
         <activity android:name=".Delete"/>
+
+        <activity android:name="book_categories.CategoriesMenu"/>
+        <activity android:name="book_categories.ReadCategory"/>
+        <activity android:name="book_categories.CurrentlyReadingCategory"/>
+        <activity android:name="book_categories.ToReadCategory"/>
+
+
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

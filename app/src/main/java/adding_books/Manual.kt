@@ -34,6 +34,9 @@ class Manual: AppCompatActivity() {
 
         val submitButton = findViewById<Button>(R.id.submitISBN)
 
+        // pdaoma submit pogu, ja nav value
+
+
         submitButton.setOnClickListener {
             retrieveAuthToken()
 

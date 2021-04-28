@@ -1,4 +1,4 @@
-package com.example.pocket_library_list
+package shelf
 
 import adapters.ReadListView
 import android.accounts.Account
@@ -7,14 +7,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
-import android.widget.Button
-import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pocket_library_list.R
 import models.BookshelveVolumeModels
 import interfaces.Interface
-import models.SearchedBooksModel
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -119,12 +117,6 @@ class Read: AppCompatActivity() {
                        layout.adapter = ReadListView(volumes)
 
                            }
-
-
-
-
-
-
 
                    }
                }

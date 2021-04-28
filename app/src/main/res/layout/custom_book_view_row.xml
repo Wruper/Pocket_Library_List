@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="160dp"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Read">
+    tools:context="shelf.Read">
 
 
     <LinearLayout
@@ -102,12 +102,6 @@
                 android:layout_height="match_parent"
                 android:gravity="end">
 
-                <Button
-                    android:layout_width="50dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/remove_icon"
-                    android:backgroundTint="@color/black"
-                    android:id="@+id/remove"/>
 
             </LinearLayout>
 
