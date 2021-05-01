@@ -1,4 +1,4 @@
-package book_categories
+package book_genre
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -11,7 +11,7 @@ import com.example.pocket_library_list.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.squareup.picasso.Picasso
 
-class CategoriesMenu: AppCompatActivity() {
+class GenreMenu: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,17 +42,17 @@ class CategoriesMenu: AppCompatActivity() {
         val currentlyReading: CardView = findViewById(R.id.currentlyReading)
 
         read.setOnClickListener{
-            val intent = Intent(this, ReadCategory::class.java)
+            val intent = Intent(this, ReadGenre::class.java)
             startActivity(intent)
         }
 
         toRead.setOnClickListener{
-            val intent = Intent(this, ToReadCategory::class.java)
+            val intent = Intent(this, ToReadGenre::class.java)
             startActivity(intent)
         }
 
         currentlyReading.setOnClickListener{
-            val intent = Intent(this, CurrentlyReadingCategory::class.java)
+            val intent = Intent(this, CurrentlyReadingGenre::class.java)
             startActivity(intent)
         }
     }

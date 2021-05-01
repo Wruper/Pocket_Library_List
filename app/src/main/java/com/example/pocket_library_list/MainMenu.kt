@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import book_categories.CategoriesMenu
+import book_genre.GenreMenu
 
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -66,7 +66,7 @@ class MainMenu : AppCompatActivity() {
         }
 
         categories.setOnClickListener{
-            val intent = Intent(this, CategoriesMenu::class.java)
+            val intent = Intent(this, GenreMenu::class.java)
             startActivity(intent)
         }
 

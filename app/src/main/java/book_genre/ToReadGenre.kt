@@ -1,4 +1,4 @@
-package book_categories
+package book_genre
 
 import adapters.CategoryAdapter
 import android.accounts.Account
@@ -22,7 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.security.auth.callback.Callback
 
-class ToReadCategory: AppCompatActivity() {
+class ToReadGenre: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +42,14 @@ class OnError : Callback {
     }
 }
 
+    private fun checkIfNoCategory(category: String): String {
+        return if(category == "null"){
+            "No category"
+        }
+        else{
+            category
+        }
+    }
 
 
 private fun retrieveAuthToken(layout:RecyclerView) {
@@ -105,13 +113,33 @@ private fun getData(baseUrl: String, token: String, layout:RecyclerView) {
                 response: Response<BookshelveVolumeModels>
         ) {
             if (response.code() == 200) {
-                println("bebeebebbe")
                 val volumes: BookshelveVolumeModels = response.body()
+                //ieliek visus itemus listaaa
+                val categoryList = ArrayList<String>()
+                for(i in 0 until volumes.totalItems){
+                    //parbauda vai nav book bez zanra
+                    categoryList.add(checkIfNoCategory
+                    (volumes.items!![i].volumeInfo?.categories?.get(0).toString()))
+                }
+                //ja ir tikai 1 vai nav itemu, tad nelieto distinct
+                if(categoryList.size <= 1){
+                    runOnUiThread {
 
-                runOnUiThread {
+                        layout.adapter = CategoryAdapter(categoryList,"2")
 
-                    layout.adapter = CategoryAdapter(volumes)
+                    }
+                }
+                //ja ir vairak par 1 itemu, izmantojoam distinct
+                else{
+                    // iznem atkartojosos itemus
+                    val newCategoryList: ArrayList<String> = categoryList.distinct()
+                            as ArrayList<String>
 
+                    runOnUiThread {
+
+                        layout.adapter = CategoryAdapter(newCategoryList,"2")
+
+                    }
                 }
 
             }

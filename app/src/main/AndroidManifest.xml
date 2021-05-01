@@ -31,10 +31,11 @@
 
         <activity android:name=".Delete"/>
 
-        <activity android:name="book_categories.CategoriesMenu"/>
-        <activity android:name="book_categories.ReadCategory"/>
-        <activity android:name="book_categories.CurrentlyReadingCategory"/>
-        <activity android:name="book_categories.ToReadCategory"/>
+        <activity android:name="book_genre.GenreMenu"/>
+        <activity android:name="book_genre.ReadGenre"/>
+        <activity android:name="book_genre.CurrentlyReadingGenre"/>
+        <activity android:name="book_genre.ToReadGenre"/>
+        <activity android:name="book_genre.SelectedGenreBooks"/>
 
 
         <activity android:name=".SplashScreen">

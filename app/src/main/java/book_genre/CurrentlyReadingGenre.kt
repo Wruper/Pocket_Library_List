@@ -1,7 +1,6 @@
-package book_categories
+package book_genre
 
 import adapters.CategoryAdapter
-import adapters.ReadListView
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.os.Bundle
@@ -23,7 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.security.auth.callback.Callback
 
-class ReadCategory: AppCompatActivity() {
+class CurrentlyReadingGenre: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +32,9 @@ class ReadCategory: AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         retrieveAuthToken(recyclerView)
 
+
     }
+
 
     class OnError : Callback {
         fun handleMessage(msg: Message?): Boolean {
@@ -42,9 +43,16 @@ class ReadCategory: AppCompatActivity() {
         }
     }
 
+    private fun checkIfNoCategory(category: String): String {
+        return if(category == "null"){
+            "No category"
+        }
+        else{
+            category
+        }
+    }
 
-
-    private fun retrieveAuthToken(layout:RecyclerView) {
+    private fun retrieveAuthToken(layout: RecyclerView) {
         val am = AccountManager.get(this)
         val accounts = am.getAccountsByType("com.google")
         val options = Bundle()
@@ -74,7 +82,7 @@ class ReadCategory: AppCompatActivity() {
 
     }
 
-    private fun getData(baseUrl: String, token: String, layout:RecyclerView) {
+    private fun getData(baseUrl: String, token: String, layout: RecyclerView) {
 
         val logging = HttpLoggingInterceptor()
         logging.apply { logging.level = HttpLoggingInterceptor.Level.BODY }
@@ -96,7 +104,7 @@ class ReadCategory: AppCompatActivity() {
                         .build()
 
         val service = retrofit.create(Interface::class.java)
-        val call = service.getBookshelvesBooks("4")
+        val call = service.getBookshelvesBooks("3")
 
 
         call.enqueue(object : retrofit2.Callback<BookshelveVolumeModels> {
@@ -105,15 +113,34 @@ class ReadCategory: AppCompatActivity() {
                     response: Response<BookshelveVolumeModels>
             ) {
                 if (response.code() == 200) {
-                    println("bebeebebbe")
                     val volumes: BookshelveVolumeModels = response.body()
-
-                    runOnUiThread {
-
-                        layout.adapter = CategoryAdapter(volumes)
-
+                    //ieliek visus itemus listaaa
+                    val categoryList = ArrayList<String>()
+                    for (i in 0 until volumes.totalItems) {
+                        //parbauda vai nav book bez zanra
+                        categoryList.add(checkIfNoCategory
+                        (volumes.items!![i].volumeInfo?.categories?.get(0).toString()))
                     }
+                    println(categoryList)
+                    if (categoryList.size <= 1) {
+                        runOnUiThread {
 
+                            layout.adapter = CategoryAdapter(categoryList,"3")
+
+                        }
+                    }
+                    //ja ir vairak par 1 itemu, izmantojoam distinct
+                    else {
+                        // iznem atkartojosos itemus
+                        val newCategoryList: ArrayList<String> = categoryList.distinct()
+                                as ArrayList<String>
+
+                        runOnUiThread {
+
+                            layout.adapter = CategoryAdapter(newCategoryList,"3")
+
+                        }
+                    }
                 }
             }
 
@@ -123,5 +150,6 @@ class ReadCategory: AppCompatActivity() {
             }
         })
     }
-
 }
+
+
