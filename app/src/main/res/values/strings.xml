@@ -1,16 +1,32 @@
 <resources>
     <string name="app_name">Pocket_Library_List</string>
     <string name="action_settings">Settings</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
     <!-- Strings for splashscreen and log-in screen -->
     <string name="welcome">Welcome</string>
     <string name="logo_description">Applications logo</string>
     <string name="log_in_text">Please log in using your google account!</string>
     <string name="log_out">Log out</string>
+
+    <!-- Strings for Main menu -->
+    <string name="bookshelf">Bookshelf</string>
+    <string name="stats">Stats</string>
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="categories">Categories</string>
+    <string name="avatar_image_desc">End-users avatar.</string>
+    <string name="welcome_text">Welcome back: </string>
+
+    <!-- Strings for Bookshelf related activities -->
+    <string name="read">Read</string>
+    <string name="currently_reading">Currently Reading</string>
+    <string name="to_read">To Read</string>
 
 
 

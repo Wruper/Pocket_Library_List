@@ -13,7 +13,7 @@ import book_genre.GenreMenu
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.squareup.picasso.Picasso
-import shelf.BookStatusSelect
+import bookshelf.BookshelfMenu
 
 
 class MainMenu : AppCompatActivity() {
@@ -26,8 +26,9 @@ class MainMenu : AppCompatActivity() {
         retrieveBasicInfo()
         onClickListeners()
 
-        }
+    }
 
+    //Retrieves End-users full name and avatar image.
     @SuppressLint("SetTextI18n")
     private fun retrieveBasicInfo() {
         val acct = GoogleSignIn.getLastSignedInAccount(this)
@@ -36,51 +37,44 @@ class MainMenu : AppCompatActivity() {
             val personPhoto = acct.photoUrl
             val avatar: ImageView = findViewById(R.id.profilePic)
             val text: TextView = findViewById(R.id.name)
-            text.text = "Welcome back: $personName"
-            Picasso.get().load(personPhoto).into(avatar);
-
+            text.append(" $personName")
+            Picasso.get().load(personPhoto).into(avatar)
         }
     }
 
-    private fun onClickListeners(){
+    private fun onClickListeners() {
         val categories: CardView = findViewById(R.id.categories)
-        val addBook:CardView = findViewById(R.id.add)
+        val addBook: CardView = findViewById(R.id.add)
         val delete: CardView = findViewById(R.id.delete)
         val shelf: CardView = findViewById(R.id.shelf)
         val stats: CardView = findViewById(R.id.stats)
 
-
-        shelf.setOnClickListener{
-            val intent = Intent(this, BookStatusSelect::class.java)
+        shelf.setOnClickListener {
+            val intent = Intent(this, BookshelfMenu::class.java)
             startActivity(intent)
         }
 
-        addBook.setOnClickListener{
+        addBook.setOnClickListener {
             val intent = Intent(this, AddBookMenu::class.java)
             startActivity(intent)
         }
 
-        delete.setOnClickListener{
+        delete.setOnClickListener {
             val intent = Intent(this, Delete::class.java)
             startActivity(intent)
         }
 
-        categories.setOnClickListener{
+        categories.setOnClickListener {
             val intent = Intent(this, GenreMenu::class.java)
             startActivity(intent)
         }
 
-        stats.setOnClickListener{
+        stats.setOnClickListener {
             val intent = Intent(this, Stats::class.java)
             startActivity(intent)
         }
 
     }
-
-
-
-
-
 
 }
 

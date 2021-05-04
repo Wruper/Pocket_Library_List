@@ -1,7 +1,6 @@
 package book_genre
 
 import adapters.BooksByGenre
-import adapters.ReadListView
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.os.Bundle
@@ -20,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import shelf.Read
+import bookshelf.Read
 
 
 class SelectedGenreBooks: AppCompatActivity() {

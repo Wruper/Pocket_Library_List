@@ -25,13 +25,13 @@
         <activity android:name=".MainMenu"
             android:screenOrientation="portrait"/>
 
-        <activity android:name="shelf.BookStatusSelect"
+        <activity android:name="bookshelf.BookshelfMenu"
             android:screenOrientation="portrait"/>
-        <activity android:name="shelf.Read"
+        <activity android:name="bookshelf.Read"
             android:screenOrientation="portrait"/>
-        <activity android:name="shelf.CurrentlyReading"
+        <activity android:name="bookshelf.CurrentlyReading"
             android:screenOrientation="portrait"/>
-        <activity android:name="shelf.ToRead"
+        <activity android:name="bookshelf.ToRead"
             android:screenOrientation="portrait"/>
 
         <activity android:name="adding_books.AddBookMenu"/>

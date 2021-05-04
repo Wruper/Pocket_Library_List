@@ -5,53 +5,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainMenu"
-    android:background=	"@color/menu_background">
+    android:background="@color/menu_background"
+    tools:context=".MainMenu">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+        
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:background="@drawable/background">
 
-
             <TextView
+                android:id="@+id/name"
                 android:layout_width="200dp"
                 android:layout_height="100dp"
-                android:id="@+id/name"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_marginTop="30dp"
-                android:textSize="20sp"
+                android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:gravity="center"
-                android:textStyle="bold"
-
-                />
-
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="30dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="15dp"
                 app:cardCornerRadius="70dp"
                 app:cardElevation="6dp">
 
                 <ImageView
+                    android:id="@+id/profilePic"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/profilePic"
-                    />
+                    android:contentDescription="@string/logo_description" />
             </androidx.cardview.widget.CardView>
-
         </RelativeLayout>
 
         <GridLayout
@@ -71,22 +66,23 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="12dp"
                 android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="6dp">
-
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/logo_description"
                         android:src="@drawable/icon" />
 
                     <TextView
@@ -94,11 +90,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="12dp"
-                        android:text="Read"
-                        android:textColor="@color/purple_200"
+                        android:text="@string/read"
+                        android:textColor="@color/dark_purple"
                         android:textSize="20sp" />
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
         </GridLayout>
 
@@ -120,6 +115,7 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="12dp"
                 android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="6dp">
 
@@ -128,12 +124,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/logo_description"
                         android:src="@drawable/icon" />
 
                     <TextView
@@ -141,11 +139,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="12dp"
-                        android:text="Currently Reading"
-                        android:textColor="@color/purple_200"
+                        android:text="@string/currently_reading"
+                        android:textColor="@color/dark_purple"
                         android:textSize="18sp" />
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
         </GridLayout>
 
@@ -166,21 +163,23 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="12dp"
                 android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="6dp">
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/logo_description"
                         android:src="@drawable/icon" />
 
                     <TextView
@@ -188,18 +187,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="12dp"
-                        android:text="To Read"
-                        android:textColor="@color/purple_200"
+                        android:text="@string/to_read"
+                        android:textColor="@color/dark_purple"
                         android:textSize="18sp" />
 
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
-
         </GridLayout>
-
-
     </LinearLayout>
-
-
 </LinearLayout>

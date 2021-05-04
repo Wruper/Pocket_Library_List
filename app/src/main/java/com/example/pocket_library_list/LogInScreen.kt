@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Network
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
 
 
@@ -35,12 +33,17 @@ class LogInScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.log_in_page)
 
+        setOnClickListeners(gso)
+        isNetworkConnected(this)
+
+
+    }
+
+    private fun setOnClickListeners(gso: GoogleSignInOptions) {
         // Build a GoogleSignInClient with the options specified by gso.
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         val btnClick = findViewById<SignInButton>(R.id.logIn)
         val btnLogOut = findViewById<Button>(R.id.logOut)
-
-        isNetworkConnected(this)
 
         btnClick.setOnClickListener {
             val signInIntent = mGoogleSignInClient.signInIntent
@@ -60,17 +63,15 @@ class LogInScreen : AppCompatActivity() {
 
     //This function handles the result of the End-User logging in using his Google account.
     private fun handleSignInResult() {
-        if(isNetworkConnected(this) == null){
+        if (isNetworkConnected(this) == null) {
             Toast.makeText(applicationContext, "Please check your internet connection " +
                     "before trying to log in.", Toast.LENGTH_LONG).show()
-        }
-        else{
+        } else {
             val intent = Intent(this, MainMenu::class.java)
             startActivity(intent)
         }
 
     }
-
 
     override fun onActivityResult(requestcode: Int, resultcode: Int, data: Intent?) {
         super.onActivityResult(requestcode, resultcode, data)

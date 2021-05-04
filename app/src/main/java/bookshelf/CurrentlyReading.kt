@@ -1,4 +1,4 @@
-package shelf
+package bookshelf
 
 import adapters.ReadListView
 import android.accounts.Account
