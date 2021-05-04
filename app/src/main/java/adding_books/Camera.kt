@@ -1,4 +1,5 @@
 package adding_books
+
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.annotation.SuppressLint
@@ -29,7 +30,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.security.auth.callback.Callback
 
-class Camera: AppCompatActivity() {
+class Camera : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,7 @@ class Camera: AppCompatActivity() {
         addValueToSpinner()
 
 
-        btn_scan.setOnClickListener{
+        btn_scan.setOnClickListener {
             val scanner = IntentIntegrator(this)
             scanner.setOrientationLocked(false)
             scanner.setBarcodeImageEnabled(true)
@@ -49,7 +50,7 @@ class Camera: AppCompatActivity() {
         }
 
 
-        btn_submit.setOnClickListener{
+        btn_submit.setOnClickListener {
             retrieveAuthToken()
         }
     }
@@ -66,7 +67,7 @@ class Camera: AppCompatActivity() {
                 Toast.makeText(parent.context, "Selected: $spinerValue", Toast.LENGTH_SHORT).show()
             }
 
-            override  fun onNothingSelected(parent: AdapterView<*>) {}
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
@@ -114,7 +115,7 @@ class Camera: AppCompatActivity() {
     }
 
 
-    private fun getISBNTextValue():String{
+    private fun getISBNTextValue(): String {
         val isbn = findViewById<TextView>(R.id.isbnValue)
         return isbn.text.toString()
     }
@@ -189,21 +190,21 @@ class Camera: AppCompatActivity() {
                     println("bebeebebbe")
                     val volumes: SearchedBooksModel = response.body()
                     println(volumes.items!![0].id)
-                    postData(baseUrl,token, volumes.items!![0].id)
+                    postData(baseUrl, token, volumes.items!![0].id)
 
                 }
             }
 
             override fun onFailure(call: Call<SearchedBooksModel>?, t: Throwable?) {
-                Toast.makeText(applicationContext,"The ISBN numbers is either invalid" +
-                        "or cannot be found on the database.",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "The ISBN numbers is either invalid" +
+                        "or cannot be found on the database.", Toast.LENGTH_LONG).show()
             }
 
         })
     }
 
 
-    private fun postData(baseUrl: String, token: String, bookID: String ){
+    private fun postData(baseUrl: String, token: String, bookID: String) {
         val logging = HttpLoggingInterceptor()
         logging.apply { logging.level = HttpLoggingInterceptor.Level.BODY }
         val httpClient = OkHttpClient.Builder().addInterceptor(logging)
@@ -224,18 +225,18 @@ class Camera: AppCompatActivity() {
 
         val service = retrofit.create(Interface::class.java)
 
-        val call = service.postNewBook(getSpinnerValue(),bookID)
+        val call = service.postNewBook(getSpinnerValue(), bookID)
         call.enqueue(object : retrofit2.Callback<BookshelveVolumeModels> {
             override fun onResponse(
                     call: Call<BookshelveVolumeModels>,
                     response: Response<BookshelveVolumeModels>
             ) {
-                Toast.makeText(applicationContext,"Success",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Success", Toast.LENGTH_LONG).show()
             }
 
             override fun onFailure(call: Call<BookshelveVolumeModels>?, t: Throwable?) {
-                Toast.makeText(applicationContext,"Something went wrong," +
-                        "please check your internet connection",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Something went wrong," +
+                        "please check your internet connection", Toast.LENGTH_LONG).show()
             }
 
         })
