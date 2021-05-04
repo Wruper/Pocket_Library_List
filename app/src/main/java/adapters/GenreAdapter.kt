@@ -5,12 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import book_genre.SelectedGenreBooks
 import com.example.pocket_library_list.R
-import models.BookshelveVolumeModels
-import retrofit2.Callback
 
 class CategoryAdapter(
         private val categoryList: ArrayList<String> = ArrayList<String>(),

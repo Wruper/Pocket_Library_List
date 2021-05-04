@@ -1,144 +1,174 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreen"
-    android:background=	"@color/menu_background">
-
-
+    android:background="@color/menu_background"
+    android:orientation="vertical"
+    tools:context=".SplashScreen">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@drawable/background"
-        android:id="@+id/topImage"/>
+        android:background="@drawable/background">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:shadowColor="#000000"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="1"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15dp"
+            app:cardCornerRadius="70dp"
+            app:cardElevation="6dp">
+
+            <ImageView
+                android:id="@+id/profilePic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/logo_description" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/buttomImage"
-        android:layout_below="@+id/topImage">
+        android:layout_height="370dp"
+        android:layout_gravity="center">
 
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:src="@drawable/stats_info_rectangle"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/stats_info_rectangle"
+            android:contentDescription="@string/avatar_image_desc" />
 
         <TextView
+            android:id="@+id/infoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Your stats:"
-            android:textSize="25sp"
             android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:id="@+id/infoText"/>
+            android:text="@string/your_stats"
+            android:textAlignment="center"
+            android:textColor="@color/dark_purple"
+            android:textSize="25sp"
+            android:textStyle="bold|italic" />
 
         <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Read books: "
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textColor="@color/black"
             android:id="@+id/readBooksCount"
-            android:layout_below="@id/infoText"/>
-
-        <TextView
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To read books: "
+            android:layout_below="@id/infoText"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/read_books_stats"
+            android:textAlignment="center"
+            android:textColor="@color/dark_purple"
             android:textSize="20sp"
+            android:textStyle="bold|italic"/>
+
+        <TextView
             android:id="@+id/toReadBooksCount"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:layout_below="@+id/readBooksCount"/>
-
-        <TextView
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Currently reading books: "
+            android:layout_below="@+id/readBooksCount"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/to_read_books_stats"
+            android:textAlignment="center"
+            android:textColor="@color/dark_purple"
             android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
             android:id="@+id/nowReadingBooks"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:layout_below="@+id/toReadBooksCount"/>
-
-        <TextView
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Read pages: "
+            android:layout_below="@+id/toReadBooksCount"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/currently_reading"
+            android:textAlignment="center"
+            android:textColor="@color/dark_purple"
             android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
             android:id="@+id/readPages"
-            android:textColor="@color/black"
-            android:layout_below="@+id/nowReadingBooks"/>
-
-        <TextView
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time spent reading: "
+            android:layout_below="@+id/nowReadingBooks"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/read_pages"
+            android:textAlignment="center"
+            android:textColor="@color/dark_purple"
             android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
             android:id="@+id/timeSpentReading"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:layout_below="@+id/readPages"/>
-
-        <TextView
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pages left to read: "
+            android:layout_below="@+id/readPages"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/time_spent_reading"
             android:textAlignment="center"
+            android:textColor="@color/dark_purple"
             android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
             android:id="@+id/pagesLeftToRead"
-            android:textColor="@color/black"
-            android:layout_below="@+id/timeSpentReading"/>
-
-        <TextView
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time needed to read unread books: "
-            android:textAlignment="center"
+            android:layout_below="@+id/timeSpentReading"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/pages_to_read"
+            android:textAlignment="center"
+            android:textColor="@color/dark_purple"
             android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
             android:id="@+id/neededTime"
-            android:textColor="@color/black"
-            android:layout_below="@+id/pagesLeftToRead"/>
-
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pagesLeftToRead"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/time_needed"
+            android:textAlignment="center"
+            android:textColor="@color/dark_purple"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
     </RelativeLayout>
 
 
-
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/buttomImage"
+        android:layout_width="wrap_content"
         android:layout_height="180dp"
-        android:background="@drawable/background_180"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/buttomImage"/>
+        android:layout_gravity="bottom"
+        android:background="@drawable/background_180" />
 
-
-
-
-
-
-
-
-
-</RelativeLayout>
+</LinearLayout>

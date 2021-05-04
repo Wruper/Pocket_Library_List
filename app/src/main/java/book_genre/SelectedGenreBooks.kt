@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pocket_library_list.R
 import interfaces.Interface
-import models.BookshelveVolumeModels
+import models.BookshelvesVolumeModels
 import models.Item
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -105,14 +105,14 @@ private fun getData(baseUrl: String, token: String, layout: RecyclerView,
     val call = service.getBookshelvesBooks(shelfType!!)
 
 
-    call.enqueue(object : retrofit2.Callback<BookshelveVolumeModels> {
+    call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
         override fun onResponse(
-                call: Call<BookshelveVolumeModels>,
-                response: Response<BookshelveVolumeModels>
+                call: Call<BookshelvesVolumeModels>,
+                response: Response<BookshelvesVolumeModels>
         ) {
             if (response.code() == 200) {
                 println("bebeebebbe")
-                val volumes: BookshelveVolumeModels = response.body()
+                val volumes: BookshelvesVolumeModels = response.body()
                 val bookList = ArrayList<Item>()
 
                 for(i in 0 until volumes.totalItems){
@@ -133,7 +133,7 @@ private fun getData(baseUrl: String, token: String, layout: RecyclerView,
         }
 
 
-        override fun onFailure(call: Call<BookshelveVolumeModels>?, t: Throwable?) {
+        override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
             println("blaaa")
         }
     })

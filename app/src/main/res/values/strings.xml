@@ -27,6 +27,24 @@
     <string name="read">Read</string>
     <string name="currently_reading">Currently Reading</string>
     <string name="to_read">To Read</string>
+    <string name="book_cover_desc">This is the book cover</string>
+    <string name="book_title">Title</string>
+    <string name="book_author">Author</string>
+    <string name="book_release_date">Release Date</string>
+    <string name="book_isbn">ISBN</string>
+    <string name="book_publisher">Publisher</string>
+
+    <!-- Strings for Stats related activities -->
+    <string name="your_stats">Your stats</string>
+    <string name="read_books_stats">Read books:</string>
+    <string name="to_read_books_stats">To read books:</string>
+    <string name="curr_reading_books">Currently reading books:</string>
+    <string name="read_pages">Read pages:</string>
+    <string name="time_spent_reading">Time spent reading:</string>
+    <string name="pages_to_read">Pages left to read:</string>
+    <string name="time_needed">Time needed to read unread books:</string>
+
+
 
 
 

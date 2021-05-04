@@ -5,5 +5,5 @@
     <solid android:color="@color/menu_background" />
     <stroke
         android:width="3dp"
-        android:color="@color/black" />
+        android:color="@color/dark_purple" />
 </shape>

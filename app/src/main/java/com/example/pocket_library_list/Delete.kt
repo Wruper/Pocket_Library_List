@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.squareup.picasso.Picasso
 import interfaces.Interface
-import models.BookshelveVolumeModels
+import models.BookshelvesVolumeModels
 import models.SearchedBooksModel
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -172,14 +172,14 @@ private fun retrieveCategoriesBookTitles(baseUrl: String, token: String, array: 
     println(getCategorySpinnerValue())
 
 
-    call.enqueue(object : retrofit2.Callback<BookshelveVolumeModels> {
+    call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
         override fun onResponse(
-                call: Call<BookshelveVolumeModels>,
-                response: Response<BookshelveVolumeModels>
+                call: Call<BookshelvesVolumeModels>,
+                response: Response<BookshelvesVolumeModels>
         ) {
             if (response.code() == 200) {
                 println("yesss")
-                val volumes: BookshelveVolumeModels = response.body()
+                val volumes: BookshelvesVolumeModels = response.body()
                 //Checks if the array is empty before inserting the values.
                 // If there are values in the array, the array is emptied, so that the values from previous
                 //call don't stack
@@ -216,7 +216,7 @@ private fun retrieveCategoriesBookTitles(baseUrl: String, token: String, array: 
         }
 
 
-        override fun onFailure(call: Call<BookshelveVolumeModels>?, t: Throwable?) {
+        override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
             println("blaaa")
         }
     })
@@ -350,10 +350,10 @@ private fun deleteData(baseUrl: String, token: String, bookID: String){
     val service = retrofit.create(Interface::class.java)
 
     val call = service.removeNewBook(getCategorySpinnerValue(), bookID)
-    call.enqueue(object : retrofit2.Callback<BookshelveVolumeModels> {
+    call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
         override fun onResponse(
-                call: Call<BookshelveVolumeModels>,
-                response: Response<BookshelveVolumeModels>
+                call: Call<BookshelvesVolumeModels>,
+                response: Response<BookshelvesVolumeModels>
         ) {
 
             // edit this
@@ -363,7 +363,7 @@ private fun deleteData(baseUrl: String, token: String, bookID: String){
             startActivity(intent)
         }
 
-        override fun onFailure(call: Call<BookshelveVolumeModels>?, t: Throwable?) {
+        override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
             Toast.makeText(applicationContext, "Something went wrong," +
                     "please check your internet connection", Toast.LENGTH_LONG).show()
         }

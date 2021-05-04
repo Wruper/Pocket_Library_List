@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="UselessParent">
-        
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="180dp"
@@ -29,7 +29,11 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic"
+                android:shadowColor="#000000"
+                android:shadowDx="4"
+                android:shadowDy="4"
+                android:shadowRadius="1" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
@@ -49,6 +53,12 @@
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
         <GridLayout
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -56,7 +66,7 @@
             android:alignmentMode="alignMargins"
             android:columnCount="1"
             android:columnOrderPreserved="false"
-            android:rowCount="3">
+            android:rowCount="1">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/read"
@@ -92,7 +102,8 @@
                         android:layout_marginTop="12dp"
                         android:text="@string/read"
                         android:textColor="@color/dark_purple"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </GridLayout>
@@ -105,7 +116,8 @@
             android:alignmentMode="alignMargins"
             android:columnCount="1"
             android:columnOrderPreserved="false"
-            android:rowCount="3">
+            android:rowCount="1"
+            android:id="@+id/secondGrid">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/currentlyReading"
@@ -141,58 +153,69 @@
                         android:layout_marginTop="12dp"
                         android:text="@string/currently_reading"
                         android:textColor="@color/dark_purple"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold|italic"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </GridLayout>
 
-        <GridLayout
-            android:layout_width="200dp"
+        <RelativeLayout
+            android:id="@+id/buttomImage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:alignmentMode="alignMargins"
-            android:columnCount="1"
-            android:columnOrderPreserved="false"
-            android:rowCount="3">
+            android:background="@drawable/background_180">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/toRead"
-                android:layout_width="wrap_content"
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_margin="12dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="25dp"
-                app:cardElevation="6dp">
+                android:layout_gravity="center"
+                android:alignmentMode="alignMargins"
+                android:columnCount="1"
+                android:columnOrderPreserved="false"
+                android:rowCount="3">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/toRead"
+                    android:layout_width="170dp"
+                    android:layout_height="145dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
                     android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    tools:ignore="UseCompoundDrawables">
+                    android:layout_margin="5dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="6dp">
 
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/logo_description"
-                        android:src="@drawable/icon" />
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/to_read"
-                        android:textColor="@color/dark_purple"
-                        android:textSize="18sp" />
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        tools:ignore="UseCompoundDrawables">
 
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </GridLayout>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/logo_description"
+                            android:src="@drawable/icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/to_read"
+                            android:textColor="@color/dark_purple"
+                            android:textSize="18sp"
+                            android:textStyle="bold|italic"/>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </GridLayout>
+        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package shelf
+package bookshelf
 
 
 import android.annotation.SuppressLint
@@ -12,14 +12,13 @@ import com.example.pocket_library_list.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.squareup.picasso.Picasso
 
-class BookStatusSelect: AppCompatActivity() {
+class BookshelfMenu: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_status_select)
         onClickListener()
         retrieveBasicInfo()
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -30,8 +29,8 @@ class BookStatusSelect: AppCompatActivity() {
             val personPhoto = acct.photoUrl
             val avatar: ImageView = findViewById(R.id.profilePic)
             val text: TextView = findViewById(R.id.name)
-            text.text = "Welcome back: $personName"
-            Picasso.get().load(personPhoto).into(avatar);
+            text.text = "$personName"
+            Picasso.get().load(personPhoto).into(avatar)
 
         }
     }

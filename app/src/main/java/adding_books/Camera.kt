@@ -18,12 +18,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.zxing.integration.android.IntentIntegrator
 import com.squareup.picasso.Picasso
 import interfaces.Interface
-import models.BookshelveVolumeModels
+import models.BookshelvesVolumeModels
 import models.SearchedBooksModel
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -226,15 +225,15 @@ class Camera : AppCompatActivity() {
         val service = retrofit.create(Interface::class.java)
 
         val call = service.postNewBook(getSpinnerValue(), bookID)
-        call.enqueue(object : retrofit2.Callback<BookshelveVolumeModels> {
+        call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
             override fun onResponse(
-                    call: Call<BookshelveVolumeModels>,
-                    response: Response<BookshelveVolumeModels>
+                    call: Call<BookshelvesVolumeModels>,
+                    response: Response<BookshelvesVolumeModels>
             ) {
                 Toast.makeText(applicationContext, "Success", Toast.LENGTH_LONG).show()
             }
 
-            override fun onFailure(call: Call<BookshelveVolumeModels>?, t: Throwable?) {
+            override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
                 Toast.makeText(applicationContext, "Something went wrong," +
                         "please check your internet connection", Toast.LENGTH_LONG).show()
             }

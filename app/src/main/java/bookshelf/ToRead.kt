@@ -7,11 +7,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pocket_library_list.R
-import models.BookshelveVolumeModels
+import models.BookshelvesVolumeModels
 import interfaces.Interface
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -30,7 +31,7 @@ class ToRead: AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        retrieveAuthToken(recyclerView)
+        retrieveToReadBooks(recyclerView)
 
     }
     class OnError : Callback {
@@ -40,7 +41,8 @@ class ToRead: AppCompatActivity() {
         }
     }
 
-    private fun retrieveAuthToken(layout: RecyclerView) {
+    //Retrieves End-users OAuth token in order to use Google Book API with users information
+    private fun retrieveToReadBooks(layout: RecyclerView) {
         val am = AccountManager.get(this)
         val accounts = am.getAccountsByType("com.google")
         val options = Bundle()
@@ -70,6 +72,7 @@ class ToRead: AppCompatActivity() {
 
     }
 
+    //Retrieves data from "To Read" bookshelf
     private fun getData(baseUrl: String, token: String, layout: RecyclerView) {
 
         val logging = HttpLoggingInterceptor()
@@ -84,7 +87,6 @@ class ToRead: AppCompatActivity() {
             chain.proceed(request)
         }
 
-
         val retrofit: Retrofit =
                 Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
                         .baseUrl(baseUrl)
@@ -95,15 +97,13 @@ class ToRead: AppCompatActivity() {
         val call = service.getBookshelvesBooks("2")
 
 
-        call.enqueue(object : retrofit2.Callback<BookshelveVolumeModels> {
+        call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
             override fun onResponse(
-                    call: Call<BookshelveVolumeModels>,
-                    response: Response<BookshelveVolumeModels>
+                    call: Call<BookshelvesVolumeModels>,
+                    response: Response<BookshelvesVolumeModels>
             ) {
                 if (response.code() == 200) {
-                    println("bebeebebbe")
-                    val volumes: BookshelveVolumeModels = response.body()
-
+                    val volumes: BookshelvesVolumeModels = response.body()
 
                     runOnUiThread {
                         layout.adapter = ReadListView(volumes)
@@ -111,8 +111,8 @@ class ToRead: AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<BookshelveVolumeModels>?, t: Throwable?) {
-                println("blaaa")
+            override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
+                Toast.makeText(applicationContext, "An ERROR occurred", Toast.LENGTH_LONG).show()
             }
         })
     }

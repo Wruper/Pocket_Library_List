@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import models.BookshelveVolumeModels
+import models.BookshelvesVolumeModels
 import com.example.pocket_library_list.R
 import com.squareup.picasso.Picasso
-import java.util.*
-import kotlin.collections.ArrayList
 
 
-class ReadListView(private val volumes: BookshelveVolumeModels) :
+class ReadListView(private val volumes: BookshelvesVolumeModels) :
         RecyclerView.Adapter<CustomViewHolder>(){
 
 
