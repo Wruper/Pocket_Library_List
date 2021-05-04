@@ -60,8 +60,7 @@
             android:rowCount="3"
             android:columnCount="2"
             android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false"
-            android:layout_marginTop="5dp">
+            android:columnOrderPreserved="false">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -150,6 +149,7 @@
                 android:focusable="true">
 
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -210,16 +210,35 @@
             </androidx.cardview.widget.CardView>
         </GridLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@drawable/background_180"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/buttomImage">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="1"
+            android:columnCount="1"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center">
+
+
         <androidx.cardview.widget.CardView
             android:id="@+id/categories"
-            android:layout_width="170dp"
-            android:layout_height="144dp"
+            android:layout_width="160dp"
+            android:layout_height="145dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="12dp"
             app:cardCornerRadius="25dp"
             app:cardElevation="6dp"
             android:layout_gravity="center">
+
 
 
             <LinearLayout
@@ -245,5 +264,9 @@
                     android:textSize="18sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        </GridLayout>
+        </RelativeLayout>
+
+
     </LinearLayout>
 </ScrollView>

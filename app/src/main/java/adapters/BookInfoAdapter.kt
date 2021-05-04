@@ -44,7 +44,7 @@ class ReadListView(private val volumes: BookshelveVolumeModels) :
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
         val title = volumes.items!!.get(position)!!.volumeInfo!!.title
-        val author = volumes.items!!.get(position)!!.volumeInfo!!.authors!!.get(0)
+        val author = volumes.items[position].volumeInfo!!.authors!!.get(0)
         val releaseYear = volumes.items!!.get(position)!!.volumeInfo!!.publishedDate
         val isbn = volumes.items!!.get(position)!!.volumeInfo!!.industryIdentifiers!!.get(0).identifier
         var publisher = volumes.items!!.get(position)!!.volumeInfo!!.publisher

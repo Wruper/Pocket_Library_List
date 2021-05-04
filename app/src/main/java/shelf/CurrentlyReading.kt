@@ -29,7 +29,7 @@ class CurrentlyReading: AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.currently_reading)
+        setContentView(R.layout.all_book_screen)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)

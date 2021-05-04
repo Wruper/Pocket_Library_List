@@ -27,7 +27,7 @@ class Read: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.read)
+        setContentView(R.layout.all_book_screen)
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)

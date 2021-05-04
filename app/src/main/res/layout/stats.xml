@@ -1,6 +1,144 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashScreen"
+    android:background=	"@color/menu_background">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/background"
+        android:id="@+id/topImage"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttomImage"
+        android:layout_below="@+id/topImage">
+
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:src="@drawable/stats_info_rectangle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Your stats:"
+            android:textSize="25sp"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/infoText"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Read books: "
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:id="@+id/readBooksCount"
+            android:layout_below="@id/infoText"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To read books: "
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:id="@+id/toReadBooksCount"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_below="@+id/readBooksCount"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Currently reading books: "
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:id="@+id/nowReadingBooks"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_below="@+id/toReadBooksCount"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Read pages: "
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:id="@+id/readPages"
+            android:textColor="@color/black"
+            android:layout_below="@+id/nowReadingBooks"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time spent reading: "
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:id="@+id/timeSpentReading"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_below="@+id/readPages"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pages left to read: "
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:id="@+id/pagesLeftToRead"
+            android:textColor="@color/black"
+            android:layout_below="@+id/timeSpentReading"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time needed to read unread books: "
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:id="@+id/neededTime"
+            android:textColor="@color/black"
+            android:layout_below="@+id/pagesLeftToRead"/>
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/background_180"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/buttomImage"/>
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

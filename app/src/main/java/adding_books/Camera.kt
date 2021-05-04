@@ -188,6 +188,7 @@ class Camera: AppCompatActivity() {
                 if (response.code() == 200) {
                     println("bebeebebbe")
                     val volumes: SearchedBooksModel = response.body()
+                    println(volumes.items!![0].id)
                     postData(baseUrl,token, volumes.items!![0].id)
 
                 }

@@ -70,6 +70,11 @@ class MainMenu : AppCompatActivity() {
             startActivity(intent)
         }
 
+        stats.setOnClickListener{
+            val intent = Intent(this, Stats::class.java)
+            startActivity(intent)
+        }
+
     }
 
 
