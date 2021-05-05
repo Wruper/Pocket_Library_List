@@ -114,8 +114,6 @@ private fun addValueToCategorySpinner() {
         }
     }
 
-
-
     fun getAuthTokenForCategoriesBooks(categoryArrayList: ArrayList<String>){
         val am = AccountManager.get(this)
         val accounts = am.getAccountsByType("com.google")
@@ -222,8 +220,6 @@ private fun retrieveCategoriesBookTitles(baseUrl: String, token: String, array: 
     })
 }
 
-
-
     @SuppressLint("SetTextI18n")
     private fun retrieveBasicInfo() {
         val acct = GoogleSignIn.getLastSignedInAccount(this)
@@ -237,7 +233,6 @@ private fun retrieveCategoriesBookTitles(baseUrl: String, token: String, array: 
 
         }
     }
-
 
 class OnError : Callback {
     fun handleMessage(msg: Message?): Boolean {
@@ -274,11 +269,6 @@ private fun getAuthTokenForDelete() {
     )
 
 }
-
-
-
-
-
 
     private fun onDeleteGetData(baseUrl: String, token: String) {
 

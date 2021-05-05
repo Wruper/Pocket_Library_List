@@ -6,6 +6,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -33,9 +35,24 @@ class Manual: AppCompatActivity() {
         setContentView(R.layout.manual_add)
 
         val submitButton = findViewById<Button>(R.id.submitISBN)
+        val editText = findViewById<EditText>(R.id.isbnInputField)
 
-        // pdaoma submit pogu, ja nav value
+        val tw: TextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                disableButton(submitButton)
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                disableButton(submitButton)
+            }
+            override fun afterTextChanged(s: Editable) {
+                disableButton(submitButton)
 
+            }
+        }
+
+        editText.addTextChangedListener(tw)
+
+        disableButton(submitButton)
 
         submitButton.setOnClickListener {
             retrieveAuthToken()
@@ -47,6 +64,13 @@ class Manual: AppCompatActivity() {
 
 
     }
+
+    private fun disableButton(btn_submit: Button){
+        val isbn = findViewById<EditText>(R.id.isbnInputField)
+        println(isbn.text.count())
+        btn_submit.isEnabled = (isbn.text.count() > 12)
+    }
+
 
     private fun getSpinnerValue(): String {
         val spinner = findViewById<View>(R.id.spinner) as Spinner
@@ -74,7 +98,7 @@ class Manual: AppCompatActivity() {
             val personPhoto = acct.photoUrl
             val avatar: ImageView = findViewById(R.id.profilePic)
             val text: TextView = findViewById(R.id.name)
-            text.text = "Welcome back: $personName"
+            text.text = " $personName"
             Picasso.get().load(personPhoto).into(avatar);
 
         }
@@ -165,21 +189,21 @@ class Manual: AppCompatActivity() {
                 if (response.code() == 200) {
                     println("bebeebebbe")
                     val volumes: SearchedBooksModel = response.body()
-                    postData(baseUrl,token, volumes.items!![0].id)
+                    postData(baseUrl, token, volumes.items!![0].id)
 
                 }
             }
 
             override fun onFailure(call: Call<SearchedBooksModel>?, t: Throwable?) {
-                Toast.makeText(applicationContext,"The ISBN numbers is either invalid" +
-                        "or cannot be found on the database.",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "The ISBN numbers is either invalid" +
+                        "or cannot be found on the database.", Toast.LENGTH_LONG).show()
             }
 
         })
     }
 
 
-   private fun postData(baseUrl: String, token: String, bookID: String ){
+   private fun postData(baseUrl: String, token: String, bookID: String){
         val logging = HttpLoggingInterceptor()
         logging.apply { logging.level = HttpLoggingInterceptor.Level.BODY }
         val httpClient = OkHttpClient.Builder().addInterceptor(logging)
@@ -200,18 +224,18 @@ class Manual: AppCompatActivity() {
 
         val service = retrofit.create(Interface::class.java)
 
-        val call = service.postNewBook(getSpinnerValue(),bookID)
+        val call = service.postNewBook(getSpinnerValue(), bookID)
        call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
            override fun onResponse(
                    call: Call<BookshelvesVolumeModels>,
                    response: Response<BookshelvesVolumeModels>
            ) {
-               Toast.makeText(applicationContext,"Success",Toast.LENGTH_LONG).show()
+               Toast.makeText(applicationContext, "Success", Toast.LENGTH_LONG).show()
            }
 
            override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
-               Toast.makeText(applicationContext,"Something went wrong," +
-                       "please check your internet connection",Toast.LENGTH_LONG).show()
+               Toast.makeText(applicationContext, "Something went wrong," +
+                       "please check your internet connection", Toast.LENGTH_LONG).show()
            }
 
        })

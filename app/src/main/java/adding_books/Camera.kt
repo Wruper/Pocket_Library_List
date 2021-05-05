@@ -39,6 +39,7 @@ class Camera : AppCompatActivity() {
         retrieveBasicInfo()
         addValueToSpinner()
 
+        disableButton(btn_submit)
 
         btn_scan.setOnClickListener {
             val scanner = IntentIntegrator(this)
@@ -48,10 +49,14 @@ class Camera : AppCompatActivity() {
 
         }
 
-
         btn_submit.setOnClickListener {
             retrieveAuthToken()
         }
+    }
+
+    private fun disableButton(btn_submit: Button){
+        val isbnText = findViewById<TextView>(R.id.isbnValue)
+        btn_submit.isEnabled = isbnText.text != this.getString(R.string.scan_msg)
     }
 
     private fun addValueToSpinner() {
@@ -62,8 +67,8 @@ class Camera : AppCompatActivity() {
         spinner.adapter = arrayAdapter
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val spinerValue = parent.getItemAtPosition(position).toString()
-                Toast.makeText(parent.context, "Selected: $spinerValue", Toast.LENGTH_SHORT).show()
+                val spinnerValue = parent.getItemAtPosition(position).toString()
+                Toast.makeText(parent.context, "Selected: $spinnerValue", Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -79,13 +84,14 @@ class Camera : AppCompatActivity() {
             val avatar: ImageView = findViewById(R.id.profilePic)
             val text: TextView = findViewById(R.id.name)
             text.text = "Welcome back: $personName"
-            Picasso.get().load(personPhoto).into(avatar);
+            Picasso.get().load(personPhoto).into(avatar)
 
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val txtResult: TextView = findViewById(R.id.isbnValue)
+        val btn_submit: Button = findViewById(R.id.sumbitButton)
         if (resultCode == Activity.RESULT_OK) {
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (result != null) {
@@ -94,7 +100,7 @@ class Camera : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
                     txtResult.text = result.contents
-
+                    disableButton(btn_submit)
                 }
             } else {
                 super.onActivityResult(requestCode, resultCode, data)
@@ -186,10 +192,9 @@ class Camera : AppCompatActivity() {
                     response: Response<SearchedBooksModel>
             ) {
                 if (response.code() == 200) {
-                    println("bebeebebbe")
                     val volumes: SearchedBooksModel = response.body()
                     println(volumes.items!![0].id)
-                    postData(baseUrl, token, volumes.items!![0].id)
+                    postData(baseUrl, token, volumes.items[0].id)
 
                 }
             }
@@ -201,7 +206,6 @@ class Camera : AppCompatActivity() {
 
         })
     }
-
 
     private fun postData(baseUrl: String, token: String, bookID: String) {
         val logging = HttpLoggingInterceptor()

@@ -29,7 +29,7 @@ class AddBookMenu: AppCompatActivity() {
             val personPhoto = acct.photoUrl
             val avatar: ImageView = findViewById(R.id.profilePic)
             val text: TextView = findViewById(R.id.name)
-            text.text = "Welcome back: $personName"
+            text.text = " $personName"
             Picasso.get().load(personPhoto).into(avatar);
 
         }

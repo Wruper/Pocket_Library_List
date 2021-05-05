@@ -44,6 +44,13 @@
     <string name="pages_to_read">Pages left to read:</string>
     <string name="time_needed">Time needed to read unread books:</string>
 
+    <!-- Strings for Add related activities -->
+    <string name="manual">Manual</string>
+    <string name="camera">Camera</string>
+    <string name="submit">Submit</string>
+    <string name="scan">Scan</string>
+    <string name="scan_msg">Scan your ISBN number:</string>
+    <string name="insert_msg">Insert the ISBN number:</string>
 
 
 
