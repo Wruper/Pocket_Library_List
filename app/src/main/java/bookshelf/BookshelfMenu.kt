@@ -31,7 +31,6 @@ class BookshelfMenu: AppCompatActivity() {
             val text: TextView = findViewById(R.id.name)
             text.text = "$personName"
             Picasso.get().load(personPhoto).into(avatar)
-
         }
     }
 

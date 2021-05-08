@@ -38,13 +38,13 @@ class CurrentlyReading : AppCompatActivity() {
     }
 
     class OnError : Callback {
-        fun handleMessage(msg: Message?): Boolean {
+        fun handleMessage(): Boolean {
             Log.e("onError", "ERROR")
             return false
         }
     }
 
-    //Retrieves End-users OAuth token in order to use Google Book API with users information
+    //Retrieves End-users OAuth token in order to use Google Book API with users information.
     private fun retrieveCurrentlyReadingBooks(layout: RecyclerView) {
         val am = AccountManager.get(this)
         val accounts = am.getAccountsByType("com.google")

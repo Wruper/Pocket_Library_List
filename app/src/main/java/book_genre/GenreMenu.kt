@@ -11,16 +11,19 @@ import com.example.pocket_library_list.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.squareup.picasso.Picasso
 
-class GenreMenu: AppCompatActivity() {
+class GenreMenu : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_status_select)
         onClickListener()
         retrieveBasicInfo()
-
     }
 
+    /*
+    Retrieves the End-Users basic information as the users Google accounts full name and
+    the users avatars image link, that  is used in Picasso to display it.
+    */
     @SuppressLint("SetTextI18n")
     private fun retrieveBasicInfo() {
         val acct = GoogleSignIn.getLastSignedInAccount(this)
@@ -35,23 +38,22 @@ class GenreMenu: AppCompatActivity() {
         }
     }
 
-
-    private fun onClickListener(){
+    private fun onClickListener() {
         val toRead: CardView = findViewById(R.id.toRead)
         val read: CardView = findViewById(R.id.read)
         val currentlyReading: CardView = findViewById(R.id.currentlyReading)
 
-        read.setOnClickListener{
+        read.setOnClickListener {
             val intent = Intent(this, ReadGenre::class.java)
             startActivity(intent)
         }
 
-        toRead.setOnClickListener{
+        toRead.setOnClickListener {
             val intent = Intent(this, ToReadGenre::class.java)
             startActivity(intent)
         }
 
-        currentlyReading.setOnClickListener{
+        currentlyReading.setOnClickListener {
             val intent = Intent(this, CurrentlyReadingGenre::class.java)
             startActivity(intent)
         }

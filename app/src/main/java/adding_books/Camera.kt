@@ -127,7 +127,7 @@ class Camera : AppCompatActivity() {
     }
 
     class OnError : Callback {
-        fun handleMessage(msg: Message?): Boolean {
+        fun handleMessage(): Boolean {
             Log.e("onError", "ERROR")
             return false
         }

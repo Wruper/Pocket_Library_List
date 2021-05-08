@@ -1,7 +1,6 @@
 package bookshelf
 
 import adapters.BookListView
-import adapters.ReadListView
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.os.Bundle

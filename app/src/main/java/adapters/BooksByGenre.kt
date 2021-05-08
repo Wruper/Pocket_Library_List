@@ -9,7 +9,7 @@ import com.example.pocket_library_list.R
 import com.squareup.picasso.Picasso
 import models.Item
 
-class BooksByGenre(private val bookList: ArrayList<Item> = ArrayList<Item>()):
+class BooksByGenre(private val bookList: ArrayList<Item> = ArrayList()):
     RecyclerView.Adapter<CustomViewHolders>() {
 
     /*
