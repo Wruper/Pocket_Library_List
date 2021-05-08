@@ -52,6 +52,9 @@
     <string name="scan_msg">Scan your ISBN number:</string>
     <string name="insert_msg">Insert the ISBN number:</string>
 
+    <!-- Strings for Add related activities -->
+    <string name="delete_msg">Please select the bookshelf and a book to delete</string>
+
 
 
 

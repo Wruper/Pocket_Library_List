@@ -1,5 +1,6 @@
 package bookshelf
 
+import adapters.BookListView
 import adapters.ReadListView
 import android.accounts.Account
 import android.accounts.AccountManager
@@ -107,7 +108,7 @@ class Read : AppCompatActivity() {
 
                     runOnUiThread {
 
-                        layout.adapter = ReadListView(volumes)
+                        layout.adapter = BookListView(volumes)
 
                     }
                 }

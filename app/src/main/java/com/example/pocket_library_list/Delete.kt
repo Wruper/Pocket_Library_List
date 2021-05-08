@@ -34,10 +34,8 @@ class Delete: AppCompatActivity() {
 
          val deleteButton = findViewById<Button>(R.id.deleteButton)
 
-
         deleteButton.setOnClickListener {
             getAuthTokenForDelete()
-
 
         }
 
@@ -228,7 +226,7 @@ private fun retrieveCategoriesBookTitles(baseUrl: String, token: String, array: 
             val personPhoto = acct.photoUrl
             val avatar: ImageView = findViewById(R.id.profilePic)
             val text: TextView = findViewById(R.id.name)
-            text.text = "Welcome back: $personName"
+            text.text = " $personName"
             Picasso.get().load(personPhoto).into(avatar);
 
         }

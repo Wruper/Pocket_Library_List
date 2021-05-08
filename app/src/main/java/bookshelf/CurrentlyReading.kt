@@ -1,6 +1,6 @@
 package bookshelf
 
-import adapters.ReadListView
+import adapters.BookListView
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.os.Bundle
@@ -107,7 +107,7 @@ class CurrentlyReading : AppCompatActivity() {
                     val volumes: BookshelvesVolumeModels = response.body()
 
                     runOnUiThread {
-                        layout.adapter = ReadListView(volumes)
+                        layout.adapter = BookListView(volumes)
                     }
                 }
             }

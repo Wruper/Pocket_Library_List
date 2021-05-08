@@ -34,27 +34,30 @@ class Camera : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.camera_add)
-        val btn_scan: Button = findViewById(R.id.btnScan)
-        val btn_submit: Button = findViewById(R.id.sumbitButton)
+        val scanButton: Button = findViewById(R.id.btnScan)
+        val submitButton: Button = findViewById(R.id.sumbitButton)
         retrieveBasicInfo()
         addValueToSpinner()
 
-        disableButton(btn_submit)
+        submitButtonStatus(submitButton)
 
-        btn_scan.setOnClickListener {
+        scanButton.setOnClickListener {
             val scanner = IntentIntegrator(this)
             scanner.setOrientationLocked(false)
             scanner.setBarcodeImageEnabled(true)
             scanner.initiateScan()
-
         }
 
-        btn_submit.setOnClickListener {
+        submitButton.setOnClickListener {
             retrieveAuthToken()
         }
     }
 
-    private fun disableButton(btn_submit: Button){
+    /*
+    This function disables or enables the "Submit" button depending on value in isbnText
+    since the value for that TextView changes when End-user scans an ISBN bar code.
+    */
+    private fun submitButtonStatus(btn_submit: Button) {
         val isbnText = findViewById<TextView>(R.id.isbnValue)
         btn_submit.isEnabled = isbnText.text != this.getString(R.string.scan_msg)
     }
@@ -65,16 +68,12 @@ class Camera : AppCompatActivity() {
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayList)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = arrayAdapter
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val spinnerValue = parent.getItemAtPosition(position).toString()
-                Toast.makeText(parent.context, "Selected: $spinnerValue", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
     }
 
+    /*
+    Retrieves the End-Users basic information as the users Google accounts full name and
+    the users avatars image link, that  is used in Picasso to display it.
+    */
     @SuppressLint("SetTextI18n")
     private fun retrieveBasicInfo() {
         val acct = GoogleSignIn.getLastSignedInAccount(this)
@@ -83,15 +82,18 @@ class Camera : AppCompatActivity() {
             val personPhoto = acct.photoUrl
             val avatar: ImageView = findViewById(R.id.profilePic)
             val text: TextView = findViewById(R.id.name)
-            text.text = "Welcome back: $personName"
+            text.text = " $personName"
             Picasso.get().load(personPhoto).into(avatar)
-
         }
     }
 
+    /*
+    This function retrieves a Toast message if the scanned ISBN bar code was a success or not.
+    If the scan was a success, then the submit button is enabled.
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val txtResult: TextView = findViewById(R.id.isbnValue)
-        val btn_submit: Button = findViewById(R.id.sumbitButton)
+        val submitButton: Button = findViewById(R.id.sumbitButton)
         if (resultCode == Activity.RESULT_OK) {
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (result != null) {
@@ -100,7 +102,7 @@ class Camera : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
                     txtResult.text = result.contents
-                    disableButton(btn_submit)
+                    submitButtonStatus(submitButton)
                 }
             } else {
                 super.onActivityResult(requestCode, resultCode, data)
@@ -115,10 +117,9 @@ class Camera : AppCompatActivity() {
             "Read" -> "4"
             "Currently reading" -> "3"
             "To read" -> "2"
-            else -> "Error" // Edit this with toast
+            else -> "Error" // This will never happen, since the spinner will always have 3 values.
         }
     }
-
 
     private fun getISBNTextValue(): String {
         val isbn = findViewById<TextView>(R.id.isbnValue)
@@ -140,27 +141,29 @@ class Camera : AppCompatActivity() {
 
         for (i in accounts.indices) {
             if (accounts[i].type == "com.google") myAccount = accounts[i]
-
         }
 
         am.getAuthToken(
-                myAccount,                            // Account retrieved using getAccountsByType()
-                "Manage your tasks",    // Auth scope
-                options,                              // Authenticator-specific options
-                this,                         // Your activity
-                { result ->
-                    result.result.getString(AccountManager.KEY_AUTHTOKEN)?.let {
-                        getData(
-                                "https://www.googleapis.com/books/v1/",
-                                result.result.getString(AccountManager.KEY_AUTHTOKEN)!!
-                        )
-                    }
-                },                        // Callback called when a token is successfully acquired
-                Handler().apply { Manual.OnError() }       // Callback called if an error occurs
+            myAccount,                            // Account retrieved using getAccountsByType()
+            "Manage your tasks",    // Auth scope
+            options,                              // Authenticator-specific options
+            this,                         // Your activity
+            { result ->
+                result.result.getString(AccountManager.KEY_AUTHTOKEN)?.let {
+                    getData(
+                        "https://www.googleapis.com/books/v1/",
+                        result.result.getString(AccountManager.KEY_AUTHTOKEN)!!
+                    )
+                }
+            },                        // Callback called when a token is successfully acquired
+            Handler().apply { Manual.OnError() }       // Callback called if an error occurs
         )
-
     }
 
+    /*
+    Finds the book by ISBN number, using the scanned ISBN value and the selected
+    spinner, when "Submit" was pressed.
+    */
     private fun getData(baseUrl: String, token: String) {
 
         val logging = HttpLoggingInterceptor()
@@ -169,27 +172,26 @@ class Camera : AppCompatActivity() {
 
         httpClient.addInterceptor { chain ->
             val request: Request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $token")
-                    .build()
+                .addHeader("Authorization", "Bearer $token")
+                .build()
             println(token)
             chain.proceed(request)
         }
 
         val retrofit: Retrofit =
-                Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-                        .baseUrl(baseUrl)
-                        .client(httpClient.build())
-                        .build()
+            Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(baseUrl)
+                .client(httpClient.build())
+                .build()
 
         val service = retrofit.create(Interface::class.java)
 
         val call = service.getBooksInfo(getISBNTextValue())
 
-
         call.enqueue(object : retrofit2.Callback<SearchedBooksModel> {
             override fun onResponse(
-                    call: Call<SearchedBooksModel>,
-                    response: Response<SearchedBooksModel>
+                call: Call<SearchedBooksModel>,
+                response: Response<SearchedBooksModel>
             ) {
                 if (response.code() == 200) {
                     val volumes: SearchedBooksModel = response.body()
@@ -200,13 +202,17 @@ class Camera : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<SearchedBooksModel>?, t: Throwable?) {
-                Toast.makeText(applicationContext, "The ISBN numbers is either invalid" +
-                        "or cannot be found on the database.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    applicationContext, "The ISBN numbers is either invalid" +
+                            "or cannot be found on the database.", Toast.LENGTH_LONG
+                ).show()
             }
-
         })
     }
 
+    /*
+    Posts the retrieved book in the selected bookshelf.
+    */
     private fun postData(baseUrl: String, token: String, bookID: String) {
         val logging = HttpLoggingInterceptor()
         logging.apply { logging.level = HttpLoggingInterceptor.Level.BODY }
@@ -214,36 +220,36 @@ class Camera : AppCompatActivity() {
 
         httpClient.addInterceptor { chain ->
             val request: Request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $token")
-                    .build()
+                .addHeader("Authorization", "Bearer $token")
+                .build()
             println(token)
             chain.proceed(request)
         }
 
         val retrofit: Retrofit =
-                Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-                        .baseUrl(baseUrl)
-                        .client(httpClient.build())
-                        .build()
+            Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(baseUrl)
+                .client(httpClient.build())
+                .build()
 
         val service = retrofit.create(Interface::class.java)
 
         val call = service.postNewBook(getSpinnerValue(), bookID)
         call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
             override fun onResponse(
-                    call: Call<BookshelvesVolumeModels>,
-                    response: Response<BookshelvesVolumeModels>
+                call: Call<BookshelvesVolumeModels>,
+                response: Response<BookshelvesVolumeModels>
             ) {
                 Toast.makeText(applicationContext, "Success", Toast.LENGTH_LONG).show()
             }
 
             override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
-                Toast.makeText(applicationContext, "Something went wrong," +
-                        "please check your internet connection", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    applicationContext, "Something went wrong," +
+                            "please check your internet connection", Toast.LENGTH_LONG
+                ).show()
             }
 
         })
     }
-
-
 }
