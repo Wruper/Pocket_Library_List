@@ -17,7 +17,8 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Pocket_Library_List.NoActionBar">
+        android:theme="@style/Theme.Pocket_Library_List.NoActionBar"
+        android:label="Pocket Library List">
 
         <!-- Strings used for fragments for navigation -->
         <activity android:name=".LogInScreen"
@@ -41,15 +42,15 @@
         <activity android:name=".Delete"
             android:screenOrientation="portrait"/>
 
-        <activity android:name="book_genre.GenreMenu"
+        <activity android:name="book_categories.CatMenu"
             android:screenOrientation="portrait"/>
-        <activity android:name="book_genre.ReadGenre"
+        <activity android:name="book_categories.ReadCat"
             android:screenOrientation="portrait"/>
-        <activity android:name="book_genre.CurrentlyReadingGenre"
+        <activity android:name="book_categories.CurrentlyReadingCat"
             android:screenOrientation="portrait"/>
-        <activity android:name="book_genre.ToReadGenre"
+        <activity android:name="book_categories.ToReadCat"
             android:screenOrientation="portrait"/>
-        <activity android:name="book_genre.SelectedGenreBooks"
+        <activity android:name="book_categories.SelectedCatBooks"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".Stats"

@@ -25,14 +25,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.security.auth.callback.Callback
 
 
-class Delete: AppCompatActivity() {
+class Delete : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.delete)
 
-         val deleteButton = findViewById<Button>(R.id.deleteButton)
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
 
         deleteButton.setOnClickListener {
             getAuthTokenForDelete()
@@ -45,65 +45,75 @@ class Delete: AppCompatActivity() {
     }
 
 
-
-private fun getBookTitleValue(): String{
-    val spinner = findViewById<Spinner>(R.id.spinnerTitle)
-    return spinner.selectedItem.toString()
-}
-
-
-
-private fun getCategorySpinnerValue(): String {
-    val spinner = findViewById<Spinner?>(R.id.spinnerCategory)
-    return when (spinner.selectedItem.toString()) {
-        "Read" -> "4"
-        "Currently reading" -> "3"
-        "To read" -> "2"
-        else -> "Error" // Edit this with toast
+    private fun getBookTitleValue(): String {
+        val spinner = findViewById<Spinner>(R.id.spinnerTitle)
+        return spinner.selectedItem.toString()
     }
-}
 
 
-
-private fun addValueToCategorySpinner() {
-
-    val spinner = findViewById<Spinner>(R.id.spinnerCategory)
-    val categoryArrayList = arrayListOf("Read", "Currently reading", "To read")
-    val readList = ArrayList<String>()
-    val currentlyReadingArrayList = ArrayList<String>()
-    val readingArrayList = ArrayList<String>()
-    val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item,
-            categoryArrayList)
-
-    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-    spinner.adapter = arrayAdapter
-    spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-            val spinnerValue = parent.getItemAtPosition(position).toString()
-            Toast.makeText(parent.context, "Selected: $spinnerValue", Toast.LENGTH_SHORT).show()
-            when (spinnerValue){
-                "Read" -> getAuthTokenForCategoriesBooks(readList)
-                "Currently reading" -> getAuthTokenForCategoriesBooks(currentlyReadingArrayList)
-                "To read" -> getAuthTokenForCategoriesBooks(readingArrayList)
-
-            }
+    private fun getCategorySpinnerValue(): String {
+        val spinner = findViewById<Spinner?>(R.id.spinnerCategory)
+        return when (spinner.selectedItem.toString()) {
+            "Read" -> "4"
+            "Currently reading" -> "3"
+            "To read" -> "2"
+            else -> "Error" // This will never be returned, since the spinner will always
+            // have 3 values
         }
-
-        override  fun onNothingSelected(parent: AdapterView<*>) {}
     }
-}
+
+
+    private fun addValueToCategorySpinner() {
+
+        val spinner = findViewById<Spinner>(R.id.spinnerCategory)
+        val categoryArrayList = arrayListOf("Read", "Currently reading", "To read")
+        val readList = ArrayList<String>()
+        val currentlyReadingArrayList = ArrayList<String>()
+        val readingArrayList = ArrayList<String>()
+        val arrayAdapter = ArrayAdapter(
+            this, android.R.layout.simple_spinner_item,
+            categoryArrayList
+        )
+
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = arrayAdapter
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                val spinnerValue = parent.getItemAtPosition(position).toString()
+                Toast.makeText(parent.context, "Selected: $spinnerValue", Toast.LENGTH_SHORT).show()
+                when (spinnerValue) {
+                    "Read" -> getAuthTokenForCategoriesBooks(readList)
+                    "Currently reading" -> getAuthTokenForCategoriesBooks(currentlyReadingArrayList)
+                    "To read" -> getAuthTokenForCategoriesBooks(readingArrayList)
+
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
 
     private fun addValueToBookNameSpinner(title: String, categoryArrayList: ArrayList<String>) {
         val spinner = findViewById<Spinner>(R.id.spinnerTitle)
         categoryArrayList.add(title)
-        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categoryArrayList)
+        val arrayAdapter =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, categoryArrayList)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = arrayAdapter
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 val spinnerValue = parent.getItemAtPosition(position).toString()
                 Toast.makeText(parent.context, "Selected: $spinnerValue", Toast.LENGTH_SHORT).show()
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -112,7 +122,7 @@ private fun addValueToCategorySpinner() {
         }
     }
 
-    fun getAuthTokenForCategoriesBooks(categoryArrayList: ArrayList<String>){
+    fun getAuthTokenForCategoriesBooks(categoryArrayList: ArrayList<String>) {
         val am = AccountManager.get(this)
         val accounts = am.getAccountsByType("com.google")
         val options = Bundle()
@@ -124,100 +134,106 @@ private fun addValueToCategorySpinner() {
         }
 
         am.getAuthToken(
-                myAccount,                            // Account retrieved using getAccountsByType()
-                "Manage your tasks",    // Auth scope
-                options,                              // Authenticator-specific options
-                this,                         // Your activity
-                { result ->
-                    result.result.getString(AccountManager.KEY_AUTHTOKEN)?.let {
-                        retrieveCategoriesBookTitles(
-                                "https://www.googleapis.com/books/v1/",
-                                result.result.getString(AccountManager.KEY_AUTHTOKEN)!!,
-                                categoryArrayList
-                        )
-                    }
-                },                        // Callback called when a token is successfully acquired
-                Handler().apply { OnError() }       // Callback called if an error occurs
+            myAccount,                            // Account retrieved using getAccountsByType()
+            "Manage your tasks",    // Auth scope
+            options,                              // Authenticator-specific options
+            this,                         // Your activity
+            { result ->
+                result.result.getString(AccountManager.KEY_AUTHTOKEN)?.let {
+                    retrieveCategoriesBookTitles(
+                        "https://www.googleapis.com/books/v1/",
+                        result.result.getString(AccountManager.KEY_AUTHTOKEN)!!,
+                        categoryArrayList
+                    )
+                }
+            },                        // Callback called when a token is successfully acquired
+            Handler().apply { OnError() }       // Callback called if an error occurs
         )
 
     }
 
 
-private fun retrieveCategoriesBookTitles(baseUrl: String, token: String, array: ArrayList<String>) {
-    val logging = HttpLoggingInterceptor()
-    logging.apply { logging.level = HttpLoggingInterceptor.Level.BODY }
-    val httpClient = OkHttpClient.Builder().addInterceptor(logging)
+    private fun retrieveCategoriesBookTitles(
+        baseUrl: String,
+        token: String,
+        array: ArrayList<String>
+    ) {
+        val logging = HttpLoggingInterceptor()
+        logging.apply { logging.level = HttpLoggingInterceptor.Level.BODY }
+        val httpClient = OkHttpClient.Builder().addInterceptor(logging)
 
-    httpClient.addInterceptor { chain ->
-        val request: Request = chain.request().newBuilder()
+        httpClient.addInterceptor { chain ->
+            val request: Request = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer $token")
                 .build()
-        println(token)
-        chain.proceed(request)
-    }
+            println(token)
+            chain.proceed(request)
+        }
 
-    val retrofit: Retrofit =
+        val retrofit: Retrofit =
             Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(baseUrl)
-                    .client(httpClient.build())
-                    .build()
+                .baseUrl(baseUrl)
+                .client(httpClient.build())
+                .build()
 
 
-    val service = retrofit.create(Interface::class.java)
-    val call = service.getBookshelvesBooks(getCategorySpinnerValue())
-    println(getCategorySpinnerValue())
+        val service = retrofit.create(Interface::class.java)
+        val call = service.getBookshelvesBooks(getCategorySpinnerValue())
+        println(getCategorySpinnerValue())
 
 
-    call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
-        override fun onResponse(
+        call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
+            override fun onResponse(
                 call: Call<BookshelvesVolumeModels>,
                 response: Response<BookshelvesVolumeModels>
-        ) {
-            if (response.code() == 200) {
-                println("yesss")
-                val volumes: BookshelvesVolumeModels = response.body()
-                //Checks if the array is empty before inserting the values.
-                // If there are values in the array, the array is emptied, so that the values from previous
-                //call don't stack
-                when {
-                    array.size == 0 && volumes.totalItems > 0 -> {
-                        for (i in 0 until volumes.totalItems) {
-                            addValueToBookNameSpinner(volumes.items!![i].volumeInfo!!.title, array)
+            ) {
+                if (response.code() == 200) {
+                    val volumes: BookshelvesVolumeModels = response.body()
+                    //Checks if the array is empty before inserting the values.
+                    // If there are values in the array, the array is emptied, so that the values from previous
+                    //call don't stack
+                    when {
+                        array.size == 0 && volumes.totalItems > 0 -> {
+                            for (i in 0 until volumes.totalItems) {
+                                addValueToBookNameSpinner(
+                                    volumes.items!![i].volumeInfo!!.title,
+                                    array
+                                )
+                            }
+                            val deleteButton = findViewById<Button>(R.id.deleteButton)
+                            deleteButton.isEnabled = true
                         }
-                        val deleteButton = findViewById<Button>(R.id.deleteButton)
-                        deleteButton.isEnabled = true
-                    }
-                    volumes.totalItems == 0 -> { // prbaudit ja vel deleto unpec refresh
-                        array.clear()
-                        addValueToBookNameSpinner("None", array)
-                        val deleteButton = findViewById<Button>(R.id.deleteButton)
-                        deleteButton.isEnabled = false
-                        // lai nepostotu ja nav book value
+                        // If there are no items in the selected category, "None" will be visible
+                        // in the book section that automatically disables the submit button.
+                        volumes.totalItems == 0 -> {
+                            array.clear()
+                            addValueToBookNameSpinner("None", array)
+                            val deleteButton = findViewById<Button>(R.id.deleteButton)
+                            deleteButton.isEnabled = false
 
-
-                    }
-                    else -> {
-                        array.clear()
-                        for (i in 0 until volumes.totalItems) {
-                            println(volumes.totalItems)
-                            addValueToBookNameSpinner(volumes.items!![i].volumeInfo!!.title, array)
                         }
-                        val deleteButton = findViewById<Button>(R.id.deleteButton)
-                        deleteButton.isEnabled = true
+                        else -> {
+                            array.clear()
+                            for (i in 0 until volumes.totalItems) {
+                                addValueToBookNameSpinner(
+                                    volumes.items!![i].volumeInfo!!.title,
+                                    array
+                                )
+                            }
+                            val deleteButton = findViewById<Button>(R.id.deleteButton)
+                            deleteButton.isEnabled = true
+                        }
                     }
                 }
-
-
             }
-        }
 
 
-        override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
-            println("blaaa")
-        }
-    })
-}
+            override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
+            }
+        })
+    }
 
+    //Retrieves End-users full name and avatar image.
     @SuppressLint("SetTextI18n")
     private fun retrieveBasicInfo() {
         val acct = GoogleSignIn.getLastSignedInAccount(this)
@@ -227,30 +243,29 @@ private fun retrieveCategoriesBookTitles(baseUrl: String, token: String, array: 
             val avatar: ImageView = findViewById(R.id.profilePic)
             val text: TextView = findViewById(R.id.name)
             text.text = " $personName"
-            Picasso.get().load(personPhoto).into(avatar);
-
+            Picasso.get().load(personPhoto).into(avatar)
         }
     }
 
-class OnError : Callback {
-    fun handleMessage(msg: Message?): Boolean {
-        Log.e("onError", "ERROR")
-        return false
-    }
-}
-
-private fun getAuthTokenForDelete() {
-    val am = AccountManager.get(this)
-    val accounts = am.getAccountsByType("com.google")
-    val options = Bundle()
-    var myAccount: Account? = null
-
-    for (i in accounts.indices) {
-        if (accounts[i].type == "com.google") myAccount = accounts[i]
-
+    class OnError : Callback {
+        fun handleMessage(msg: Message?): Boolean {
+            Log.e("onError", "ERROR")
+            return false
+        }
     }
 
-    am.getAuthToken(
+    private fun getAuthTokenForDelete() {
+        val am = AccountManager.get(this)
+        val accounts = am.getAccountsByType("com.google")
+        val options = Bundle()
+        var myAccount: Account? = null
+
+        for (i in accounts.indices) {
+            if (accounts[i].type == "com.google") myAccount = accounts[i]
+
+        }
+
+        am.getAuthToken(
             myAccount,                            // Account retrieved using getAccountsByType()
             "Manage your tasks",    // Auth scope
             options,                              // Authenticator-specific options
@@ -258,15 +273,15 @@ private fun getAuthTokenForDelete() {
             { result ->
                 result.result.getString(AccountManager.KEY_AUTHTOKEN)?.let {
                     onDeleteGetData(
-                            "https://www.googleapis.com/books/v1/",
-                            result.result.getString(AccountManager.KEY_AUTHTOKEN)!!
+                        "https://www.googleapis.com/books/v1/",
+                        result.result.getString(AccountManager.KEY_AUTHTOKEN)!!
                     )
                 }
             },                        // Callback called when a token is successfully acquired
             Handler().apply { OnError() }       // Callback called if an error occurs
-    )
+        )
 
-}
+    }
 
     private fun onDeleteGetData(baseUrl: String, token: String) {
 
@@ -276,17 +291,17 @@ private fun getAuthTokenForDelete() {
 
         httpClient.addInterceptor { chain ->
             val request: Request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $token")
-                    .build()
+                .addHeader("Authorization", "Bearer $token")
+                .build()
             println(token)
             chain.proceed(request)
         }
 
         val retrofit: Retrofit =
-                Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-                        .baseUrl(baseUrl)
-                        .client(httpClient.build())
-                        .build()
+            Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(baseUrl)
+                .client(httpClient.build())
+                .build()
 
         val service = retrofit.create(Interface::class.java)
 
@@ -295,11 +310,10 @@ private fun getAuthTokenForDelete() {
 
         call.enqueue(object : retrofit2.Callback<SearchedBooksModel> {
             override fun onResponse(
-                    call: Call<SearchedBooksModel>,
-                    response: Response<SearchedBooksModel>
+                call: Call<SearchedBooksModel>,
+                response: Response<SearchedBooksModel>
             ) {
                 if (response.code() == 200) {
-                    println("bebeebebbe")
                     val volumes: SearchedBooksModel = response.body()
                     deleteData(baseUrl, token, volumes.items!![0].id)
 
@@ -307,56 +321,57 @@ private fun getAuthTokenForDelete() {
             }
 
             override fun onFailure(call: Call<SearchedBooksModel>?, t: Throwable?) {
-                Toast.makeText(applicationContext, "The ISBN numbers is either invalid" +
-                        "or cannot be found on the database.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    applicationContext, "An Error occurred.", Toast.LENGTH_LONG
+                ).show()
             }
 
         })
     }
 
 
+    private fun deleteData(baseUrl: String, token: String, bookID: String) {
+        val logging = HttpLoggingInterceptor()
+        logging.apply { logging.level = HttpLoggingInterceptor.Level.BODY }
+        val httpClient = OkHttpClient.Builder().addInterceptor(logging)
 
-private fun deleteData(baseUrl: String, token: String, bookID: String){
-    val logging = HttpLoggingInterceptor()
-    logging.apply { logging.level = HttpLoggingInterceptor.Level.BODY }
-    val httpClient = OkHttpClient.Builder().addInterceptor(logging)
-
-    httpClient.addInterceptor { chain ->
-        val request: Request = chain.request().newBuilder()
+        httpClient.addInterceptor { chain ->
+            val request: Request = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer $token")
                 .build()
-        println(token)
-        chain.proceed(request)
-    }
+            println(token)
+            chain.proceed(request)
+        }
 
-    val retrofit: Retrofit =
+        val retrofit: Retrofit =
             Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(baseUrl)
-                    .client(httpClient.build())
-                    .build()
+                .baseUrl(baseUrl)
+                .client(httpClient.build())
+                .build()
 
-    val service = retrofit.create(Interface::class.java)
+        val service = retrofit.create(Interface::class.java)
 
-    val call = service.removeNewBook(getCategorySpinnerValue(), bookID)
-    call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
-        override fun onResponse(
+        val call = service.removeNewBook(getCategorySpinnerValue(), bookID)
+        call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
+            override fun onResponse(
                 call: Call<BookshelvesVolumeModels>,
                 response: Response<BookshelvesVolumeModels>
-        ) {
+            ) {
 
-            // edit this
-            Toast.makeText(applicationContext, "Success", Toast.LENGTH_LONG).show()
-            val intent = intent
-            finish()
-            startActivity(intent)
-        }
+                Toast.makeText(applicationContext, "Success", Toast.LENGTH_LONG).show()
+                val intent = intent
+                finish()
+                startActivity(intent)
+            }
 
-        override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
-            Toast.makeText(applicationContext, "Something went wrong," +
-                    "please check your internet connection", Toast.LENGTH_LONG).show()
-        }
+            override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
+                Toast.makeText(
+                    applicationContext, "Something went wrong," +
+                            "please check your internet connection", Toast.LENGTH_LONG
+                ).show()
+            }
 
-    })
-}
+        })
+    }
 
 }

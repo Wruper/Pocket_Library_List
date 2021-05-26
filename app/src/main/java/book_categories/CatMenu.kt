@@ -1,4 +1,4 @@
-package book_genre
+package book_categories
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -11,7 +11,7 @@ import com.example.pocket_library_list.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.squareup.picasso.Picasso
 
-class GenreMenu : AppCompatActivity() {
+class CatMenu : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,7 @@ class GenreMenu : AppCompatActivity() {
             val personPhoto = acct.photoUrl
             val avatar: ImageView = findViewById(R.id.profilePic)
             val text: TextView = findViewById(R.id.name)
-            text.text = "Welcome back: $personName"
+            text.text = " $personName"
             Picasso.get().load(personPhoto).into(avatar);
 
         }
@@ -44,17 +44,17 @@ class GenreMenu : AppCompatActivity() {
         val currentlyReading: CardView = findViewById(R.id.currentlyReading)
 
         read.setOnClickListener {
-            val intent = Intent(this, ReadGenre::class.java)
+            val intent = Intent(this, ReadCat::class.java)
             startActivity(intent)
         }
 
         toRead.setOnClickListener {
-            val intent = Intent(this, ToReadGenre::class.java)
+            val intent = Intent(this, ToReadCat::class.java)
             startActivity(intent)
         }
 
         currentlyReading.setOnClickListener {
-            val intent = Intent(this, CurrentlyReadingGenre::class.java)
+            val intent = Intent(this, CurrentlyReadingCat::class.java)
             startActivity(intent)
         }
     }

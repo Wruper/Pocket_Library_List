@@ -1,11 +1,10 @@
-package book_genre
+package book_categories
 
 import adapters.CategoryAdapter
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.os.Bundle
 import android.os.Handler
-import android.os.Message
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.security.auth.callback.Callback
 
-class ReadGenre : AppCompatActivity() {
+class ReadCat : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

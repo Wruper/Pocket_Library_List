@@ -19,7 +19,7 @@ interface Interface {
 
     @POST("mylibrary/bookshelves/{shelf}/addVolume?")
     fun postNewBook(@Path("shelf") shelfType: String, @Query("volumeId") volumeId: String)
-            : Call<BookshelvesVolumeModels> // uztaisit modeli
+            : Call<BookshelvesVolumeModels>
 
     @POST("mylibrary/bookshelves/{shelf}/removeVolume?")
     fun removeNewBook(@Path("shelf") shelfType: String, @Query("volumeId") volumeId: String)

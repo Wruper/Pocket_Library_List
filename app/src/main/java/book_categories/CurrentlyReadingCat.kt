@@ -1,11 +1,10 @@
-package book_genre
+package book_categories
 
 import adapters.CategoryAdapter
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.os.Bundle
 import android.os.Handler
-import android.os.Message
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.security.auth.callback.Callback
 
-class ToReadGenre : AppCompatActivity() {
+class CurrentlyReadingCat : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +30,7 @@ class ToReadGenre : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.categories_list)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        retrieveToReadBooks(recyclerView)
+        retrieveCurrReadingBooks(recyclerView)
     }
 
     class OnError : Callback {
@@ -45,7 +44,7 @@ class ToReadGenre : AppCompatActivity() {
     This function checks if a retrieved books has a category or not. If the book
     does not have a category, instead of null, in the RecyclerViewer the book will be listed in
     "No category" section.
-    */
+     */
     private fun checkIfNoCategory(category: String): String {
         return if (category == "null") {
             "No category"
@@ -56,9 +55,9 @@ class ToReadGenre : AppCompatActivity() {
 
     /*
     This function retrieves End-users Google OAuth token, that is used for API requests
-    just like retrieves all books in To Read bookshelf.
-    */
-    private fun retrieveToReadBooks(layout: RecyclerView) {
+    just like retrieves all books in Currently Reading bookshelf.
+     */
+    private fun retrieveCurrReadingBooks(layout: RecyclerView) {
         val am = AccountManager.get(this)
         val accounts = am.getAccountsByType("com.google")
         val options = Bundle()
@@ -66,7 +65,6 @@ class ToReadGenre : AppCompatActivity() {
 
         for (i in accounts.indices) {
             if (accounts[i].type == "com.google") myAccount = accounts[i]
-
         }
 
         am.getAuthToken(
@@ -88,8 +86,8 @@ class ToReadGenre : AppCompatActivity() {
     }
 
     /*
-    Retrieves all books in End-user To Read bookshelf
-    */
+    Retrieves all books in End-user Currently Reading bookshelf
+     */
     private fun getData(baseUrl: String, token: String, layout: RecyclerView) {
 
         val logging = HttpLoggingInterceptor()
@@ -111,8 +109,7 @@ class ToReadGenre : AppCompatActivity() {
                 .build()
 
         val service = retrofit.create(Interface::class.java)
-        val call = service.getBookshelvesBooks("2")
-
+        val call = service.getBookshelvesBooks("3")
 
         call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
             override fun onResponse(
@@ -123,6 +120,7 @@ class ToReadGenre : AppCompatActivity() {
                     val volumes: BookshelvesVolumeModels = response.body()
                     //Creates an ArrayList where all retrieved book categories will be inserted.
                     val categoryList = ArrayList<String>()
+
                     for (i in 0 until volumes.totalItems) {
                         //Checks if the book has a category.
                         categoryList.add(
@@ -130,9 +128,10 @@ class ToReadGenre : AppCompatActivity() {
                                 (volumes.items!![i].volumeInfo?.categories?.get(0).toString())
                         )
                     }
+
                     if (categoryList.size <= 1) {
                         runOnUiThread {
-                            layout.adapter = CategoryAdapter(categoryList, "2")
+                            layout.adapter = CategoryAdapter(categoryList, "3")
                         }
                     }
                     //If the list has more than one item, then distinct is used, which removes
@@ -140,14 +139,13 @@ class ToReadGenre : AppCompatActivity() {
                     else {
                         val newCategoryList: ArrayList<String> = categoryList.distinct()
                                 as ArrayList<String>
+
                         runOnUiThread {
-                            layout.adapter = CategoryAdapter(newCategoryList, "2")
+                            layout.adapter = CategoryAdapter(newCategoryList, "3")
                         }
                     }
-
                 }
             }
-
 
             override fun onFailure(call: Call<BookshelvesVolumeModels>?, t: Throwable?) {
                 Toast.makeText(
@@ -157,5 +155,6 @@ class ToReadGenre : AppCompatActivity() {
             }
         })
     }
-
 }
+
+

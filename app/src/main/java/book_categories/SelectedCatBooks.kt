@@ -1,12 +1,10 @@
-package book_genre
+package book_categories
 
-import adapters.CategoryAdapter
+import adapters.BooksByGenre
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.os.Bundle
 import android.os.Handler
-import android.os.Message
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pocket_library_list.R
 import interfaces.Interface
 import models.BookshelvesVolumeModels
+import models.Item
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,44 +20,40 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.security.auth.callback.Callback
+import bookshelf.Read
 
-class CurrentlyReadingGenre : AppCompatActivity() {
+
+class SelectedCatBooks : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.category_list)
+        setContentView(R.layout.all_book_screen)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.categories_list)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        retrieveCurrReadingBooks(recyclerView)
-    }
+        val intent = intent
+        // Retrieves the bookshelf from previous view.
+        val shelfType = intent.extras!!.getString("shelfType")
 
-    class OnError : Callback {
-        fun handleMessage(): Boolean {
-            Log.e("onError", "ERROR")
-            return false
-        }
-    }
-
-    /*
-    This function checks if a retrieved books has a category or not. If the book
-    does not have a category, instead of null, in the RecyclerViewer the book will be listed in
-    "No category" section.
-     */
-    private fun checkIfNoCategory(category: String): String {
-        return if (category == "null") {
-            "No category"
+        var category = ""
+        /* Checks if the category, that came from the previous view, is a "No category"
+        category or not.If it is, then the category is changed back to null. This is done
+        so that later if the End-user wants to see books that have no category, the books
+        which are have no category (null) can be found. */
+        category = if (intent.extras!!.getString("bookCategory") == "No category") {
+            "null"
         } else {
-            category
+            intent.extras!!.getString("bookCategory").toString()
         }
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        getBookInfo(recyclerView, shelfType, category)
     }
 
     /*
     This function retrieves End-users Google OAuth token, that is used for API requests
-    just like retrieves all books in Currently Reading bookshelf.
-     */
-    private fun retrieveCurrReadingBooks(layout: RecyclerView) {
+    to retrieve book information.
+    */
+    private fun getBookInfo(layout: RecyclerView, shelfType: String?, category: String?) {
         val am = AccountManager.get(this)
         val accounts = am.getAccountsByType("com.google")
         val options = Bundle()
@@ -78,18 +73,24 @@ class CurrentlyReadingGenre : AppCompatActivity() {
                     getData(
                         "https://www.googleapis.com/books/v1/",
                         result.result.getString(AccountManager.KEY_AUTHTOKEN)!!,
-                        layout
+                        layout,
+                        shelfType,
+                        category
                     )
                 }
             },                        // Callback called when a token is successfully acquired
-            Handler().apply { OnError() }       // Callback called if an error occurs
+            Handler().apply { Read.OnError() }       // Callback called if an error occurs
         )
+
     }
 
     /*
-    Retrieves all books in End-user Currently Reading bookshelf
-     */
-    private fun getData(baseUrl: String, token: String, layout: RecyclerView) {
+    Retrieves all books that are in the specified category and bookshelf.
+    */
+    private fun getData(
+        baseUrl: String, token: String, layout: RecyclerView,
+        shelfType: String?, category: String?
+    ) {
 
         val logging = HttpLoggingInterceptor()
         logging.apply { logging.level = HttpLoggingInterceptor.Level.BODY }
@@ -110,7 +111,7 @@ class CurrentlyReadingGenre : AppCompatActivity() {
                 .build()
 
         val service = retrofit.create(Interface::class.java)
-        val call = service.getBookshelvesBooks("3")
+        val call = service.getBookshelvesBooks(shelfType!!)
 
         call.enqueue(object : retrofit2.Callback<BookshelvesVolumeModels> {
             override fun onResponse(
@@ -119,31 +120,20 @@ class CurrentlyReadingGenre : AppCompatActivity() {
             ) {
                 if (response.code() == 200) {
                     val volumes: BookshelvesVolumeModels = response.body()
-                    //Creates an ArrayList where all retrieved book categories will be inserted.
-                    val categoryList = ArrayList<String>()
+                    /*
+                    An ArrayList has been made to store all books in selected category.
+                     */
+                    val bookList = ArrayList<Item>()
 
                     for (i in 0 until volumes.totalItems) {
-                        //Checks if the book has a category.
-                        categoryList.add(
-                            checkIfNoCategory
-                                (volumes.items!![i].volumeInfo?.categories?.get(0).toString())
-                        )
-                    }
-
-                    if (categoryList.size <= 1) {
-                        runOnUiThread {
-                            layout.adapter = CategoryAdapter(categoryList, "3")
+                        if (volumes.items!![i].volumeInfo?.categories?.get(0) == category)
+                            bookList.add(volumes.items[i])
+                        else if (category == "null" && volumes.items[i].volumeInfo?.categories == null) {
+                            bookList.add(volumes.items[i])
                         }
                     }
-                    //If the list has more than one item, then distinct is used, which removes
-                    // items that have been repeated.
-                    else {
-                        val newCategoryList: ArrayList<String> = categoryList.distinct()
-                                as ArrayList<String>
-
-                        runOnUiThread {
-                            layout.adapter = CategoryAdapter(newCategoryList, "3")
-                        }
+                    runOnUiThread {
+                        layout.adapter = BooksByGenre(bookList)
                     }
                 }
             }
@@ -156,6 +146,5 @@ class CurrentlyReadingGenre : AppCompatActivity() {
             }
         })
     }
+
 }
-
-

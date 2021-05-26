@@ -84,7 +84,7 @@ class Manual : AppCompatActivity() {
         return when (spinner.selectedItem.toString()) {
             "Read" -> "4"
             "Currently reading" -> "3"
-            "To Read" -> "3"
+            "To Read" -> "2"
             else -> "Error" // This is never going to happen, since the spinner has only 3 values.
         }
     }

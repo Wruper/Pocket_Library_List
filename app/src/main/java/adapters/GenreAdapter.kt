@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
-import book_genre.SelectedGenreBooks
+import book_categories.SelectedCatBooks
 import com.example.pocket_library_list.R
 
 class CategoryAdapter(
@@ -32,7 +32,7 @@ class CategoryAdapter(
 
         holder.view.findViewById<Button>(R.id.categoryButton).text = category
         holder.view.findViewById<Button>(R.id.categoryButton).setOnClickListener {
-            val intent = Intent(it.context, SelectedGenreBooks::class.java)
+            val intent = Intent(it.context, SelectedCatBooks::class.java)
             intent.putExtra("bookCategory", category)
             intent.putExtra("shelfType", shelfType)
             it.context.startActivity(intent)

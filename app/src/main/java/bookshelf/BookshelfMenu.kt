@@ -21,6 +21,7 @@ class BookshelfMenu: AppCompatActivity() {
         retrieveBasicInfo()
     }
 
+    //Retrieves End-users full name and avatar image.
     @SuppressLint("SetTextI18n")
     private fun retrieveBasicInfo() {
         val acct = GoogleSignIn.getLastSignedInAccount(this)

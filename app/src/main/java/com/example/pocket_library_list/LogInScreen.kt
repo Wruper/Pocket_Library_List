@@ -17,7 +17,7 @@ import com.google.android.gms.common.api.Scope
 class LogInScreen : AppCompatActivity() {
 
     companion object {
-        //This activities request code
+        //This is the activities request code
         const val REQUEST_CODE = 1
     }
 
@@ -52,6 +52,7 @@ class LogInScreen : AppCompatActivity() {
 
         btnLogOut.setOnClickListener {
             mGoogleSignInClient.revokeAccess()
+            Toast.makeText(applicationContext, "Success", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -65,7 +66,7 @@ class LogInScreen : AppCompatActivity() {
     private fun handleSignInResult() {
         if (isNetworkConnected(this) == null) {
             Toast.makeText(applicationContext, "Please check your internet connection " +
-                    "before trying to log in.", Toast.LENGTH_LONG).show()
+                    "before trying to log in.", Toast.LENGTH_SHORT).show()
         } else {
             val intent = Intent(this, MainMenu::class.java)
             startActivity(intent)
