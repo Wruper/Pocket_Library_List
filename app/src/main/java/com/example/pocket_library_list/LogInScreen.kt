@@ -23,8 +23,8 @@ class LogInScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        // Values that the app retrieves when, End-user tries to log into his Google account.
-        // *) Scope -> The app requests End-users permission to use Google Book related information.
+         // Values that the app retrieves when, End-user tries to log into his Google account.
+         // *) Scope -> The app requests End-users permission to use Google Book related information.
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestScopes(Scope("https://www.googleapis.com/auth/books"))
